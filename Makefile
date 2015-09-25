@@ -1,5 +1,5 @@
 CXXFLAGS=-g -Wall -Wextra -std=c++14
-LIB=-lstdc++
+LIB=-lstdc++ -lncurses
 
 EXECDIR=./bin
 OBJDIR=./obj
