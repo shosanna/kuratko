@@ -23,7 +23,3 @@ class btree {
   bool remove(K, V);
   V* lookup(K) const;
 };
-
-int main() {
-  cout << "hello" << endl;
-}

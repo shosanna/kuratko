@@ -3,21 +3,25 @@ LIB=-lstdc++
 
 EXECDIR=./bin
 OBJDIR=./obj
-PROGRAM=btree
+PROGRAM=map
 
-SRC=$(wildcard *.cpp)
-OBJ=$(patsubst %.cpp, $(OBJDIR)/%.o, $(SRC))
+SRC=$(wildcard *.cpp *c)
+TEMPOBJ=$(patsubst %.cpp, $(OBJDIR)/%.o, $(SRC))
+OBJ=$(patsubst %.c, $(OBJDIR)/%.o, $(TEMPOBJ))
 
 .PHONY: $(PROGRAM)
 
 all: $(PROGRAM)
 
+$(OBJDIR)/%.o: %.c
+	@$(CC) $(CFLAGS) -c $< -o $@
+
 $(OBJDIR)/%.o: %.cpp
-	$(CC) $(CXXFLAGS) -c $< -o $@
+	@$(CC) $(CXXFLAGS) -c $< -o $@
 
 $(PROGRAM): $(OBJ)
-	$(CC) $(LIB) $(OBJ) -o $(EXECDIR)/$(PROGRAM)
-	perf stat $(EXECDIR)/$(PROGRAM)
+	@$(CC) $(LIB) $(OBJ) -o $(EXECDIR)/$(PROGRAM)
+	@$(EXECDIR)/$(PROGRAM)
 
 clean:
 	rm -f -- $(OBJDIR)/*.o $(EXECDIR)/$(PROGRAM)
