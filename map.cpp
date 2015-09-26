@@ -8,7 +8,6 @@ void Map::reset() {
   }
 }
 
-
 void Map::print(WINDOW* win) {
   wmove(win, 0, 0);
 
@@ -18,21 +17,19 @@ void Map::print(WINDOW* win) {
 
       switch (curr) {
         case PLAYER:
-          curr = curr | COLOR_PAIR(2) | A_BOLD;
+          curr = curr | COLOR_PAIR(2);
           break;
 
         case EMPTY:
           break;
 
         case ENEMY:
-          curr = curr | COLOR_PAIR(1) | A_BOLD;
+          curr = curr | COLOR_PAIR(1);
           break;
       }
 
       mvwaddch(win, j, i, curr);
-      // putchar(curr);
     }
-    putchar('\n');
   }
 
   std::string s = get_error();

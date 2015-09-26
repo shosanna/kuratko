@@ -15,6 +15,7 @@ void game_init_colors() {
 void game_loop(Player& p, WINDOW* win, Map& map) {
   while (1) {
     map.print(win);
+    wmove(win, p.y, p.x);
     wrefresh(win);
 
     char c = getchar();

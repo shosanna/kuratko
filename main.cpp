@@ -22,18 +22,16 @@ int main() {
 
   game_init_colors();
 
-  Player p{5, 10, M, N};
+  WINDOW* win = newwin(M+10, N+10, 0, 0);
 
   Map map{M,N};
   map.reset();
 
-  map(10, 15) = ENEMY;
+  Player p{5, 6, M, N};
+  map(p.x, p.y) = PLAYER;
 
-  printf("\e]12;%s\a", "yellow");
-  WINDOW* win = newwin(M+10, N+10, 0, 0);
-  wmove(win, p.y, p.x);
-
-  map.print(win);
+  // map(5, 5) = ENEMY;
+  // WINDOW* win = newwin(M+10, N+10, 0, 0);
 
   game_loop(p, win, map);
 }
