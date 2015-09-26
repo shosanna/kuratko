@@ -15,14 +15,14 @@ OBJ=$(patsubst stc/%.c, $(OBJDIR)/%.o, $(TEMPOBJ))
 all: $(PROGRAM)
 
 $(OBJDIR)/%.o: src/%.c
-	@$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJDIR)/%.o: src/%.cpp
-	@$(CC) $(CXXFLAGS) -c $< -o $@
+	$(CC) $(CXXFLAGS) -c $< -o $@
 
 $(PROGRAM): $(OBJ)
-	@$(CC) $(LIB) $(OBJ) -o $(EXECDIR)/$(PROGRAM)
-	@$(EXECDIR)/$(PROGRAM)
+	$(CC) $(LIB) $(OBJ) -o $(EXECDIR)/$(PROGRAM)
+	$(EXECDIR)/$(PROGRAM)
 
 clean:
 	rm -f -- $(OBJDIR)/*.o $(EXECDIR)/$(PROGRAM)

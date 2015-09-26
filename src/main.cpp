@@ -11,8 +11,8 @@ struct Enable_curses {
 int main() {
   Enable_curses c;
 
-  const size_t M = 20;
-  const size_t N = 20;
+  const size_t M = 30;
+  const size_t N = 30;
 
   cbreak();
   noecho();
@@ -27,15 +27,24 @@ int main() {
   Map map{M,N};
   map.reset();
 
-  Player p{5, 6, M, N};
-  map(p.x, p.y) = PLAYER;
+  Player kuratko{KURATKO, 5, 6, M, N};
+  map(kuratko.x, kuratko.y) = KURATKO;
 
-  map(5,5) = ENEMY;
+  Player prasatko{PRASATKO, 22, 3, M, N};
+  map(prasatko.x, prasatko.y) = PRASATKO;
+
+  map(23,3) = KOLAC;
+  map(21,3) = KOLAC;
+  map(21,5) = KOLAC;
+  map(23,1) = KOLAC;
+  map(21,1) = KOLAC;
+  map(2,20) = KOLAC;
+  map(8,16) = KOLAC;
 
   // map(5, 5) = ENEMY;
   // WINDOW* win = newwin(M+10, N+10, 0, 0);
 
-  game_loop(p, win, map);
+  game_loop(kuratko, prasatko, win, map);
 }
 
 

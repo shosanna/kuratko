@@ -2,6 +2,12 @@
 #include "utils.h"
 #include "map.h"
 
+void toula(Player& p, std::string s) {
+  if (p.typ == KURATKO) {
+    set_error(s);
+  }
+}
+
 void Player::move(Map& map, Direction dir) {
   map(x, y) = EMPTY;
 
@@ -11,7 +17,7 @@ void Player::move(Map& map, Direction dir) {
         clear_error();
         --y;
       } else
-        set_error("chyba y");
+        toula(*this, "Kuratko se toula pryc!");
 
       break;
     case Direction::DOWN:
@@ -19,7 +25,7 @@ void Player::move(Map& map, Direction dir) {
         clear_error();
         ++y;
       } else
-        set_error("chyba y");
+        toula(*this, "Kuratko se toula pryc!");
 
       break;
     case Direction::LEFT:
@@ -27,7 +33,7 @@ void Player::move(Map& map, Direction dir) {
         clear_error();
         --x;
       } else
-        set_error("chyba x");
+        toula(*this, "Kuratko jde ven z lesa:(");
 
       break;
     case Direction::RIGHT:
@@ -35,13 +41,28 @@ void Player::move(Map& map, Direction dir) {
         clear_error();
         ++x;
       } else
-        set_error("chyba x");
+        toula(*this, "Kuratko jde ven z lesa:(");
 
       break;
   }
 
-  if (map(x,y) == ENEMY) {
-    set_error("MNAM");
+  if (map(x,y) == KOLAC) {
+    napapat();
+
+    if (typ == KURATKO) {
+      set_error("Kuratko spapalo boruvkovy kolac!");
+    } else {
+      set_error("Prasatko spapalo boruvkovy kolac!");
+    }
   }
-  map(x, y) = PLAYER;
+
+  map(x, y) = typ;
+}
+
+void Player::napapat() {
+  hlad += 1;
+}
+
+int Player::zjistiHlad() {
+  return hlad;
 }

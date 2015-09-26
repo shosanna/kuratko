@@ -14,7 +14,7 @@ class Map {
   Point& operator()(size_t i, size_t j) { return data.at(n * i + j); }
 
   void reset();
-  void print(WINDOW* win);
+  void print(WINDOW* win, Player& player);
 
   const size_t m;
   const size_t n;
