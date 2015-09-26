@@ -23,8 +23,11 @@ int main() {
   game_init_colors();
 
   WINDOW* win = newwin(M+10, N+10, 0, 0);
+  scrollok(win, TRUE);
 
-  Map map{M,N};
+  Log log{M+1, 0, 10, 10};
+
+  Map map{log,M,N};
   map.reset();
 
   Player kuratko{KURATKO, 5, 6, M, N};
@@ -44,7 +47,7 @@ int main() {
   // map(5, 5) = ENEMY;
   // WINDOW* win = newwin(M+10, N+10, 0, 0);
 
-  game_loop(kuratko, prasatko, win, map);
+  game_loop(log, kuratko, prasatko, win, map);
 }
 
 

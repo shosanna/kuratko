@@ -15,11 +15,11 @@ enum class Direction { UP, DOWN, LEFT, RIGHT };
 
 class Player {
  public:
+  char typ;
   size_t x = 0;
   size_t y = 0;
   size_t M;
   size_t N;
-  char typ;
 
   Player(char typ, size_t x, size_t y, size_t M, size_t N)
       : typ(typ), x(x), y(y), M(M), N(N) {}

@@ -1,8 +1,9 @@
 #include <vector>
 #include <random>
+#include "log.h"
 #include "game.h"
 
-void game_loop(Player& kuratko, Player& prasatko, WINDOW* win, Map& map) {
+void game_loop(Log& log, Player& kuratko, Player& prasatko, WINDOW* win, Map& map) {
   while (1) {
     std::vector<Direction> dirs = {
       Direction::UP,
@@ -18,6 +19,7 @@ void game_loop(Player& kuratko, Player& prasatko, WINDOW* win, Map& map) {
     prasatko.move(map, dirs[dis(gen)]);
 
     map.print(win, kuratko);
+    log.print(win);
     wmove(win, 50, 50);
     wrefresh(win);
 

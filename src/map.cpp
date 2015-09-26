@@ -48,11 +48,11 @@ void Map::print(WINDOW* win, Player& kuratko) {
     hladZprava = "Kuratko je napapano: ";
   }
 
-  for (int i = 0; i < hladZprava.size(); i++) {
+  for (size_t i = 0; i < hladZprava.size(); i++) {
     mvwaddch(win, m + 1, i, hladZprava[i]);
   }
 
-  for (int i = 0; i < hladStatus.size(); i++) {
+  for (size_t i = 0; i < hladStatus.size(); i++) {
     mvwaddch(win, m + 1, hladZprava.size() + 1, hladStatus[i]);
   }
 

@@ -4,7 +4,7 @@ LIB=-lstdc++ -lncurses
 
 EXECDIR=./bin
 OBJDIR=./obj
-PROGRAM=map
+PROGRAM=kuratko
 
 SRC=$(wildcard src/*.cpp src/*.c)
 TEMPOBJ=$(patsubst src/%.cpp, $(OBJDIR)/%.o, $(SRC))
@@ -12,7 +12,7 @@ OBJ=$(patsubst stc/%.c, $(OBJDIR)/%.o, $(TEMPOBJ))
 
 .PHONY: $(PROGRAM)
 
-all: $(PROGRAM)
+all: run
 
 $(OBJDIR)/%.o: src/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -22,6 +22,8 @@ $(OBJDIR)/%.o: src/%.cpp
 
 $(PROGRAM): $(OBJ)
 	$(CC) $(LIB) $(OBJ) -o $(EXECDIR)/$(PROGRAM)
+
+run: $(PROGRAM)
 	$(EXECDIR)/$(PROGRAM)
 
 clean:

@@ -3,9 +3,10 @@
 #include "map.h"
 
 void toula(Player& p, std::string s) {
-  if (p.typ == KURATKO) {
-    set_error(s);
-  }
+  // TODO
+  // if (p.typ == KURATKO) {
+  //   set_error(s);
+  // }
 }
 
 void Player::move(Map& map, Direction dir) {
