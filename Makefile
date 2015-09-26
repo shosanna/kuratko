@@ -1,22 +1,23 @@
-CXXFLAGS=-g -Wall -Wextra -std=c++14
+INCLUDE=-Iinclude
+CXXFLAGS=$(INCLUDE) -g -Wall -Wextra -std=c++14
 LIB=-lstdc++ -lncurses
 
 EXECDIR=./bin
 OBJDIR=./obj
 PROGRAM=map
 
-SRC=$(wildcard *.cpp *c)
-TEMPOBJ=$(patsubst %.cpp, $(OBJDIR)/%.o, $(SRC))
-OBJ=$(patsubst %.c, $(OBJDIR)/%.o, $(TEMPOBJ))
+SRC=$(wildcard src/*.cpp src/*.c)
+TEMPOBJ=$(patsubst src/%.cpp, $(OBJDIR)/%.o, $(SRC))
+OBJ=$(patsubst stc/%.c, $(OBJDIR)/%.o, $(TEMPOBJ))
 
 .PHONY: $(PROGRAM)
 
 all: $(PROGRAM)
 
-$(OBJDIR)/%.o: %.c
+$(OBJDIR)/%.o: src/%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-$(OBJDIR)/%.o: %.cpp
+$(OBJDIR)/%.o: src/%.cpp
 	@$(CC) $(CXXFLAGS) -c $< -o $@
 
 $(PROGRAM): $(OBJ)

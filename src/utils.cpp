@@ -13,7 +13,7 @@ std::string get_error() {
 }
 
 void set_error(std::string s) {
-  std::ofstream os("log.txt", std::ofstream::out | std::ofstream::app);
-  os << s << std::endl;
+  // std::ofstream os("log.txt", std::ofstream::out | std::ofstream::app);
+  // os << s << std::endl;
   error__ = s;
 }
