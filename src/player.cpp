@@ -40,5 +40,8 @@ void Player::move(Map& map, Direction dir) {
       break;
   }
 
+  if (map(x,y) == ENEMY) {
+    set_error("MNAM");
+  }
   map(x, y) = PLAYER;
 }

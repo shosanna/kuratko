@@ -30,6 +30,8 @@ int main() {
   Player p{5, 6, M, N};
   map(p.x, p.y) = PLAYER;
 
+  map(5,5) = ENEMY;
+
   // map(5, 5) = ENEMY;
   // WINDOW* win = newwin(M+10, N+10, 0, 0);
 
