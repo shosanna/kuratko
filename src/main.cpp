@@ -1,3 +1,4 @@
+#include <string>
 #include <ncurses.h>
 #include <string.h>
 #include "map.h"
@@ -57,18 +58,17 @@ int main() {
   footer.refresh();
   footer.ready_cursor();
 
-  // TODO - funguje?
   scrollok(footer, TRUE);
 
   wprintw(mainwin, "dalsi");
   mainwin.refresh();
 
   Log log{footer};
-  log.append_line("zuch");
-  log.append_line("nuf");
+  for (size_t i = 0; i < 50; i++) {
+    log.append_line(std::to_string(i));
+    getch();
+  }
 
-
-  getch();
 
 
   // const size_t M = 30;

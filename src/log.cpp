@@ -7,5 +7,6 @@ void Log::append_line(std::string s) {
   int x,y;
   getyx(w.w, y, x);
   wmove(w, y, x+1);
+  w.box();
   w.refresh();
 }
