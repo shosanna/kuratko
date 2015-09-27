@@ -8,6 +8,7 @@
 #include "game.h"
 #include "window.h"
 #include "status.h"
+#include <thread>
 
 using namespace std;
 
@@ -26,7 +27,8 @@ int main() {
   start_color();
   init_pair(1, COLOR_RED, COLOR_BLUE);
 
-  cbreak();
+  halfdelay(1);
+  // cbreak();
   keypad(stdscr, TRUE);
   refresh();
   noecho();
@@ -93,7 +95,7 @@ int main() {
   Player prasatko{PRASATKO, status, 1, 3, M, N};
   map(prasatko.x, prasatko.y) = PRASATKO;
 
-  int kolacu = 10;
+  int kolacu = 30;
 
   std::random_device rd;
   std::uniform_int_distribution<size_t> x_dis(0, N-1);

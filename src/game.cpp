@@ -1,10 +1,16 @@
+#include <ncurses.h>
 #include <vector>
 #include <random>
 #include "log.h"
 #include "game.h"
+#include <thread>
+#include <chrono>
 
-void game_loop(Player& kuratko, Player& prasatko, WINDOW* win, Map& map) {
-  while (1) {
+using namespace std;
+void tapkat(Player& prasatko, Map& map) {
+  while(1) {
+    this_thread::sleep_for(chrono::milliseconds(100));
+
     std::vector<Direction> dirs = {
       Direction::UP,
       Direction::DOWN,
@@ -17,23 +23,38 @@ void game_loop(Player& kuratko, Player& prasatko, WINDOW* win, Map& map) {
     std::mt19937 gen(rd());
 
     prasatko.move(map, dirs[dis(gen)]);
+  }
+}
 
-    map.print(kuratko);
+void game_loop(Player& kuratko, Player& prasatko, WINDOW* win, Map& map) {
+  thread t(tapkat, ref(prasatko), ref(map));
+
+  while (1) {
+    map.print();
     wmove(win, 50, 50);
     wrefresh(win);
 
-    char c = getch();
+    int c = getch();
+    if (c == ERR) continue;
 
     switch (c) {
+      case 'a':
+      case KEY_LEFT:
       case 'h':
         kuratko.move(map, Direction::LEFT);
         break;
+      case 'w':
+      case KEY_UP:
       case 'k':
         kuratko.move(map, Direction::UP);
         break;
+      case 's':
+      case KEY_DOWN:
       case 'j':
         kuratko.move(map, Direction::DOWN);
         break;
+      case 'd':
+      case KEY_RIGHT:
       case 'l':
         kuratko.move(map, Direction::RIGHT);
         break;
@@ -41,6 +62,8 @@ void game_loop(Player& kuratko, Player& prasatko, WINDOW* win, Map& map) {
         exit(0);
     }
   }
+
+  t.join();
 }
 
 void game_init_colors() {

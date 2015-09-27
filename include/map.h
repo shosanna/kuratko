@@ -25,7 +25,7 @@ class Map {
   }
 
   void reset();
-  void print(Player& player);
+  void print();
 
   Point& operator()(size_t x, size_t y) {
     return data.at(n * y + x);

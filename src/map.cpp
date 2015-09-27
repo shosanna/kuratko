@@ -1,5 +1,6 @@
 #include "map.h"
 #include <string>
+#include <regex>
 
 void Map::reset() {
   for (size_t y = 0; y < m; y++) {
@@ -10,7 +11,7 @@ void Map::reset() {
   }
 }
 
-void Map::print(Player& kuratko) {
+void Map::print() {
   for (size_t y = 0; y < m; y++) {
     for (size_t x = 0; x < n; x++) {
       chtype curr = (*this)(x, y);
@@ -36,10 +37,10 @@ void Map::print(Player& kuratko) {
     }
   }
 
-  std::string hladStatus = std::to_string(kuratko.zjistiHlad());
-  std::string hladZprava;
-
-  log.append_line(get_error());
+  std::string err = get_error();
+  if (err.size()) {
+    log.append_line(err);
+  }
 
   status.print();
   win.refresh();

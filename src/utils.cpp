@@ -5,7 +5,7 @@
 static std::string error__;
 
 void clear_error() {
-  set_error("                                                                ");
+  set_error("");
 }
 
 std::string get_error() {
