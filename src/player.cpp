@@ -60,7 +60,7 @@ void Player::move(Map& map, Direction dir) {
   if (map(x,y) == PRASATKO) {
     if(typ == KURATKO) {
       map.log.append_line("Kuratko se potkalo s Prasatkem :)");
-    } 
+    }
   }
 
   map(x, y) = typ;
