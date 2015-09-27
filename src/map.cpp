@@ -97,7 +97,8 @@ void Map::pathfind(Player& p) {
           p.target = next;
           p.has_target = true;
 
-          log << "set target to " << std::to_string(next.first) << " " << std::to_string(next.second);
+          log << "set target to " << std::to_string(next.first) << " "
+              << std::to_string(next.second);
           found = true;
           goto found_kolac;
         } else {
@@ -122,9 +123,10 @@ bool Map::is_valid(size_t x, size_t y) {
 }
 
 void Map::random_kolac() {
+  // TODO - race condition? see thread sanitizer
   std::random_device rd;
-  std::uniform_int_distribution<size_t> x_dis(0, n-1);
-  std::uniform_int_distribution<size_t> y_dis(0, m-1);
+  std::uniform_int_distribution<size_t> x_dis(0, n - 1);
+  std::uniform_int_distribution<size_t> y_dis(0, m - 1);
   std::mt19937 gen(rd());
-    (*this)(x_dis(gen), y_dis(gen)) = KOLAC;
+  (*this)(x_dis(gen), y_dis(gen)) = KOLAC;
 }

@@ -1,4 +1,4 @@
-ASAN=-fsanitize=address -fno-omit-frame-pointer
+ASAN=-fsanitize=thread -fno-omit-frame-pointer
 INCLUDE=-Iinclude
 CXXFLAGS=$(INCLUDE) -g -Wall -Wextra -std=c++1y -O0 $(ASAN)
 LIB=-lncurses $(ASAN)

@@ -1,6 +1,7 @@
 #ifndef LOG_H
 #define LOG_H
 
+#include <mutex>
 #include <cstdlib>
 #include <string>
 #include <ncurses.h>
@@ -11,6 +12,7 @@ class Log {
   Window& w;
   std::string data;
   std::queue<std::string> queue;
+  std::mutex m;
 
  public:
   Log(Window& w) : w(w) {}

@@ -10,6 +10,8 @@ void toula(Player&, std::string) {
 }
 
 void Player::move(Map& map, int dx, int dy) {
+  std::lock_guard<std::mutex> guard{mtx};
+
   map(x, y) = EMPTY;
 
   x += dx;
@@ -21,6 +23,8 @@ void Player::move(Map& map, int dx, int dy) {
 }
 
 void Player::move(Map& map, Direction dir) {
+  std::lock_guard<std::mutex> guard{mtx};
+
   map(x, y) = EMPTY;
 
   switch (dir) {

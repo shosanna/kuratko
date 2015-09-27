@@ -1,6 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include <mutex>
 #include <utility>
 #include <ncurses.h>
 #include "utils.h"
@@ -26,6 +27,7 @@ class Player {
   bool has_target = false;
   std::pair<size_t, size_t> target;
 
+  std::mutex mtx;
 
   Player(char typ, Status& s, size_t x, size_t y, size_t M, size_t N)
       : typ(typ), status(s), x(x), y(y), M(M), N(N) {}
