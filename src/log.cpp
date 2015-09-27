@@ -12,3 +12,5 @@ void Log::append_line(std::string s) {
   w.box();
   w.refresh();
 }
+
+Log& Log::operator<<(std::string s) { append_line(s); return *this; }

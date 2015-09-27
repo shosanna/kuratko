@@ -31,6 +31,9 @@ class Map {
     return data.at(n * y + x);
   }
 
+  void pathfind(Player&);
+  bool is_valid(size_t x, size_t y);
+
  private:
 };
 

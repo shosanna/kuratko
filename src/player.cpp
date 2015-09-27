@@ -9,6 +9,15 @@ void toula(Player&, std::string) {
   // }
 }
 
+void Player::move(Map& map, int dx, int dy) {
+  map(x, y) = EMPTY;
+
+  x += dx;
+  y += dy;
+
+  map(x, y) = typ;
+}
+
 void Player::move(Map& map, Direction dir) {
   map(x, y) = EMPTY;
 
@@ -49,6 +58,7 @@ void Player::move(Map& map, Direction dir) {
 
   if (map(x,y) == KOLAC) {
     napapat();
+    has_target = false;
 
     if (typ == KURATKO) {
       map.log.append_line("Kuratko spapalo boruvkovy kolac!");
@@ -87,4 +97,18 @@ void Player::napapat() {
 
 int Player::zjistiHlad() {
   return hlad;
+}
+
+void Player::move_to_target(Map& map) {
+  if (x == target.first && y == target.second) {
+    has_target = false;
+  } else if (x == target.first) {
+    int dy = target.second - y;
+
+    move(map, 0, dy / abs(dy));
+  } else {
+    int dx = target.first - x;
+
+    move(map, dx / abs(dx), 0);
+  }
 }

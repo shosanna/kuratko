@@ -95,7 +95,7 @@ int main() {
   Player prasatko{PRASATKO, status, 1, 3, M, N};
   map(prasatko.x, prasatko.y) = PRASATKO;
 
-  int kolacu = 300;
+  int kolacu = 20;
 
   std::random_device rd;
   std::uniform_int_distribution<size_t> x_dis(0, N-1);

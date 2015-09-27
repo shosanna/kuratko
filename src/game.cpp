@@ -1,28 +1,19 @@
+#include <thread>
+#include <chrono>
 #include <ncurses.h>
 #include <vector>
 #include <random>
 #include "log.h"
 #include "game.h"
-#include <thread>
-#include <chrono>
 
 using namespace std;
+
 void tapkat(Player& prasatko, Map& map) {
   while(1) {
     this_thread::sleep_for(chrono::milliseconds(100));
 
-    std::vector<Direction> dirs = {
-      Direction::UP,
-      Direction::DOWN,
-      Direction::LEFT,
-      Direction::RIGHT
-    };
-
-    std::random_device rd;
-    std::uniform_int_distribution<size_t> dis(0, dirs.size() - 1);
-    std::mt19937 gen(rd());
-
-    prasatko.move(map, dirs[dis(gen)]);
+    map.log << "pathfinding";
+    map.pathfind(prasatko);
   }
 }
 

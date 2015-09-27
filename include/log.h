@@ -14,6 +14,8 @@ class Log {
   Log(Window& w) : w(w) {}
 
   void append_line(std::string s);
+  Log& operator<<(std::string);
+
 };
 
 #endif /* LOG_H */
