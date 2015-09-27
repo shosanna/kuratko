@@ -28,10 +28,7 @@ class Map {
   void print(Player& player);
 
   Point& operator()(size_t x, size_t y) {
-    int index = n * y + x;
-    assert(index < m*n);
-    // return data.at(n * y + x);
-    return data[index];
+    return data.at(n * y + x);
   }
 
  private:
