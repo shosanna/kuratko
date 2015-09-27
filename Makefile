@@ -1,5 +1,5 @@
 INCLUDE=-Iinclude
-CXXFLAGS=$(INCLUDE) -g -Wall -Wextra -std=c++14
+CXXFLAGS=$(INCLUDE) -g -Wall -Wextra -std=c++1y
 LIB=-lstdc++ -lncurses
 
 EXECDIR=./bin
