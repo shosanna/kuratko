@@ -3,7 +3,7 @@
 void Status::print() {
   wmove(win, 1, 1);
 
-  waddstr(win,"Zviratka jsou napapana:\n");
+  waddstr(win, "Hladiky:\n");
 
   for (auto hladik : hladiky) {
     int x,y;
@@ -21,4 +21,5 @@ void Status::print() {
   }
 
   win.box();
+  win.refresh();
 }

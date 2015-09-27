@@ -120,3 +120,11 @@ found_kolac:
 bool Map::is_valid(size_t x, size_t y) {
   return x < n && y < m;
 }
+
+void Map::random_kolac() {
+  std::random_device rd;
+  std::uniform_int_distribution<size_t> x_dis(0, n-1);
+  std::uniform_int_distribution<size_t> y_dis(0, m-1);
+  std::mt19937 gen(rd());
+    (*this)(x_dis(gen), y_dis(gen)) = KOLAC;
+}

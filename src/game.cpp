@@ -10,17 +10,26 @@ using namespace std;
 
 void tapkat(Player& prasatko, Map& map) {
   while(1) {
-    this_thread::sleep_for(chrono::milliseconds(100));
+    this_thread::sleep_for(chrono::milliseconds(800));
 
     map.log << "pathfinding";
     map.pathfind(prasatko);
   }
 }
 
+void kolace(Map& map) {
+  while (1) {
+    this_thread::sleep_for(chrono::seconds(5));
+    map.random_kolac();
+  }
+}
+
 void game_loop(Player& kuratko, Player& prasatko, WINDOW* win, Map& map) {
   thread t(tapkat, ref(prasatko), ref(map));
+  thread t2(kolace, ref(map));
 
   while (1) {
+    map.log.flush();
     map.print();
     wmove(win, 50, 50);
     wrefresh(win);
@@ -55,6 +64,7 @@ void game_loop(Player& kuratko, Player& prasatko, WINDOW* win, Map& map) {
   }
 
   t.join();
+  t2.join();
 }
 
 void game_init_colors() {

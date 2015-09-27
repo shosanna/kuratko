@@ -36,6 +36,7 @@ class Player {
   int zjistiHlad();
 
   void move_to_target(Map& map);
+  void kolac_check(Map& map);
 
  private:
   int hlad = 0;

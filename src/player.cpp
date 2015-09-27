@@ -15,6 +15,8 @@ void Player::move(Map& map, int dx, int dy) {
   x += dx;
   y += dy;
 
+  kolac_check(map);
+
   map(x, y) = typ;
 }
 
@@ -56,22 +58,7 @@ void Player::move(Map& map, Direction dir) {
       break;
   }
 
-  if (map(x,y) == KOLAC) {
-    napapat();
-    has_target = false;
-
-    if (typ == KURATKO) {
-      map.log.append_line("Kuratko spapalo boruvkovy kolac!");
-    } else {
-      map.log.append_line("Prasatko spapalo boruvkovy kolac!");
-    }
-  }
-
-  if (map(x,y) == PRASATKO) {
-    if(typ == KURATKO) {
-      map.log.append_line("Kuratko se potkalo s Prasatkem :)");
-    }
-  }
+  kolac_check(map);
 
   map(x, y) = typ;
 }
@@ -110,5 +97,24 @@ void Player::move_to_target(Map& map) {
     int dx = target.first - x;
 
     move(map, dx / abs(dx), 0);
+  }
+}
+
+void Player::kolac_check(Map& map) {
+  if (map(x,y) == KOLAC) {
+    napapat();
+    has_target = false;
+
+    if (typ == KURATKO) {
+      map.log.append_line("Kuratko spapalo boruvkovy kolac!");
+    } else {
+      map.log.append_line("Prasatko spapalo boruvkovy kolac!");
+    }
+  }
+
+  if (map(x,y) == PRASATKO) {
+    if(typ == KURATKO) {
+      map.log.append_line("Kuratko se potkalo s Prasatkem :)");
+    }
   }
 }

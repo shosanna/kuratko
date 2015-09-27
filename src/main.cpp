@@ -95,15 +95,10 @@ int main() {
   Player prasatko{PRASATKO, status, 1, 3, M, N};
   map(prasatko.x, prasatko.y) = PRASATKO;
 
-  int kolacu = 20;
-
-  std::random_device rd;
-  std::uniform_int_distribution<size_t> x_dis(0, N-1);
-  std::uniform_int_distribution<size_t> y_dis(0, M-1);
-  std::mt19937 gen(rd());
+  int kolacu = 5;
 
   while (kolacu--) {
-    map(x_dis(gen), y_dis(gen)) = KOLAC;
+    map.random_kolac();
   }
 
   game_loop(kuratko, prasatko, mainwin, map);
