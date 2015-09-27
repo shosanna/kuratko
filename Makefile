@@ -1,7 +1,9 @@
+ASAN=-fsanitize=address -fno-omit-frame-pointer
 INCLUDE=-Iinclude
-CXXFLAGS=$(INCLUDE) -g -Wall -Wextra -std=c++1y
-LIB=-lstdc++ -lncurses
+CXXFLAGS=$(INCLUDE) -g -Wall -Wextra -std=c++1y -O0 $(ASAN)
+LIB=-lncurses $(ASAN)
 
+CXX=clang++
 EXECDIR=./bin
 OBJDIR=./obj
 PROGRAM=kuratko
@@ -16,13 +18,16 @@ all: run
 
 # TODO - fix clang linker
 $(OBJDIR)/%.o: src/%.cpp
-	clang++ $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 $(PROGRAM): $(OBJ)
-	clang++ $(LIB) $(OBJ) -o $(EXECDIR)/$(PROGRAM)
+	$(CXX) $(LIB) $(OBJ) -o $(EXECDIR)/$(PROGRAM)
 
 run: $(PROGRAM)
-	valgrind --log-file=val.txt $(EXECDIR)/$(PROGRAM)
+	$(EXECDIR)/$(PROGRAM) 2>tmp/asan.txt
+
+valgrind: $(PROGRAM)
+	valgrind --log-file=tmp/valgrind.txt $(EXECDIR)/$(PROGRAM)
 
 clean:
 	rm -f -- $(OBJDIR)/*.o $(EXECDIR)/$(PROGRAM)

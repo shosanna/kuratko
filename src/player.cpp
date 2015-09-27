@@ -2,7 +2,7 @@
 #include "utils.h"
 #include "map.h"
 
-void toula(Player& p, std::string s) {
+void toula(Player&, std::string) {
   // TODO
   // if (p.typ == KURATKO) {
   //   set_error(s);
