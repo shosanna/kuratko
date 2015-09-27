@@ -4,16 +4,16 @@
 #include <cstdlib>
 #include <string>
 #include <ncurses.h>
+#include "window.h"
 
 class Log {
-  size_t x, y, m, n;
+  Window& w;
   std::string data;
 
  public:
-  Log(size_t x, size_t y, size_t m, size_t n) : x(x), y(y), m(m), n(n) {}
+  Log(Window& w) : w(w) {}
 
   void append_line(std::string s);
-  void print(WINDOW* win);
 };
 
 #endif /* LOG_H */

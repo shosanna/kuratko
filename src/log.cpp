@@ -3,13 +3,9 @@
 #include "log.h"
 
 void Log::append_line(std::string s) {
-  data += s + "\n";
-}
-
-void Log::print(WINDOW* win) {
-  wmove(win, y, x);
-
-  for (char c : data) {
-    waddch(win, c);
-  }
+  waddstr(w, (s + "\n").c_str());
+  int x,y;
+  getyx(w.w, y, x);
+  wmove(w, y, x+1);
+  w.refresh();
 }
