@@ -2,6 +2,7 @@
 #define STATUS_H
 
 #include <map>
+#include <string>
 #include "window.h"
 
 class Status {
