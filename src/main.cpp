@@ -1,3 +1,5 @@
+#include <iostream>
+#include <vector>
 #include <string>
 #include <ncurses.h>
 #include <string.h>
@@ -5,9 +7,15 @@
 #include "game.h"
 #include "window.h"
 
+using namespace std;
+
 struct Enable_curses {
-  Enable_curses() { initscr(); }
-  ~Enable_curses() { endwin(); }
+  Enable_curses() {
+    initscr();
+  }
+  ~Enable_curses() {
+    endwin();
+  }
 };
 
 int main() {
@@ -31,11 +39,16 @@ int main() {
   double xratio = 0.7;
   double yratio = 0.8;
   if (maxy > maxx / 2) {
-    yratio = 0.6;
+      yratio = 0.6;
   }
+
+
+  // TODO - zapnout ASAN
 
   int sidebar_pos = static_cast<int>(maxx * xratio);
   int footer_pos = static_cast<int>(maxy * yratio);
+  size_t M = footer_pos - 2;
+  size_t N = sidebar_pos - 2;
 
   Window mainwin(footer_pos, sidebar_pos, 0, 0);
   mainwin.box();
@@ -63,30 +76,24 @@ int main() {
   wprintw(mainwin, "dalsi");
   mainwin.refresh();
 
-  Log log{footer};
-  for (size_t i = 0; i < 50; i++) {
-    log.append_line(std::to_string(i));
-    getch();
-  }
+  Log log{ footer };
+  // for (size_t i = 0; i < 50; i++) {
+  //   log.append_line(std::to_string(i));
+  // }
 
+  game_init_colors();
 
+  Map map{ mainwin, log, M, N };
+  map.reset();
 
-  // const size_t M = 30;
-  // const size_t N = 30;
-  //
-  // game_init_colors();
-  //
-  // Log log{footer};
-  //
-  // Map map{log,M,N};
-  // map.reset();
-  //
-  // Player kuratko{KURATKO, 5, 6, M, N};
-  // map(kuratko.x, kuratko.y) = KURATKO;
-  //
-  // Player prasatko{PRASATKO, 22, 3, M, N};
-  // map(prasatko.x, prasatko.y) = PRASATKO;
-  //
+  Player kuratko{KURATKO, 5, 3, M, N};
+  map(kuratko.x, kuratko.y) = KURATKO;
+
+  Player prasatko{PRASATKO, 1, 3, M, N};
+  map(prasatko.x, prasatko.y) = PRASATKO;
+
+  map.print(kuratko);
+
   // map(23,3) = KOLAC;
   // map(21,3) = KOLAC;
   // map(21,5) = KOLAC;
@@ -94,13 +101,13 @@ int main() {
   // map(21,1) = KOLAC;
   // map(2,20) = KOLAC;
   // map(8,16) = KOLAC;
-  //
-  // log.print(win);
-  //
-  // // map(5, 5) = ENEMY;
-  // // WINDOW* win = newwin(M+10, N+10, 0, 0);
-  //
-  // game_loop(log, kuratko, prasatko, win, map);
+
+  // map(5, 5) = ENEMY;
+  // WINDOW* win = newwin(M+10, N+10, 0, 0);
+
+  // game_loop(log, kuratko, prasatko, mainwin, map);
+
+  getch();
 
   return 0;
 }

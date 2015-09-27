@@ -14,14 +14,12 @@ OBJ=$(patsubst stc/%.c, $(OBJDIR)/%.o, $(TEMPOBJ))
 
 all: run
 
-$(OBJDIR)/%.o: src/%.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
+# TODO - fix clang linker
 $(OBJDIR)/%.o: src/%.cpp
-	$(CC) $(CXXFLAGS) -c $< -o $@
+	clang++ $(CXXFLAGS) -c $< -o $@
 
 $(PROGRAM): $(OBJ)
-	$(CC) $(LIB) $(OBJ) -o $(EXECDIR)/$(PROGRAM)
+	clang++ $(LIB) $(OBJ) -o $(EXECDIR)/$(PROGRAM)
 
 run: $(PROGRAM)
 	$(EXECDIR)/$(PROGRAM)

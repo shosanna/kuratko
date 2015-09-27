@@ -11,18 +11,24 @@ class Map {
  public:
   using Point = char;
 
-  Map(Log& log, size_t m, size_t n) : log(log), m(m), n(n), data(m * n) {}
-  Point& operator()(size_t i, size_t j) { return data.at(n * i + j); }
+  Window& win;
+  Log log;
+  size_t m;
+  size_t n;
+  std::vector<Point> data;
+
+  Map(Window& win, Log& log, size_t m, size_t n)
+      : win{win}, log{log}, m{m}, n{n}, data(m * n) {
+  }
 
   void reset();
-  void print(WINDOW* win, Player& player);
+  void print(Player& player);
 
-  Log log;
-  const size_t m;
-  const size_t n;
+  Point& operator()(size_t i, size_t j) {
+    return data.at(n * i + j);
+  }
 
  private:
-  std::vector<Point> data;
 };
 
 #endif /* MAP_H */

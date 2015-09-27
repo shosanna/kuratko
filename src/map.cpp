@@ -4,14 +4,13 @@
 void Map::reset() {
   for (size_t i = 0; i < m; i++) {
     for (size_t j = 0; j < n; j++) {
+      // auto x = data.size();
       (*this)(i, j) = EMPTY;
     }
   }
 }
 
-void Map::print(WINDOW* win, Player& kuratko) {
-  wmove(win, 0, 0);
-
+void Map::print(Player& kuratko) {
   for (size_t i = 0; i < m; i++) {
     for (size_t j = 0; j < n; j++) {
       chtype curr = (*this)(i, j);
@@ -33,7 +32,7 @@ void Map::print(WINDOW* win, Player& kuratko) {
           break;
       }
 
-      mvwaddch(win, j, i, curr);
+      mvwaddch(win, i+1, j+1, curr);
     }
   }
 
@@ -48,16 +47,9 @@ void Map::print(WINDOW* win, Player& kuratko) {
     hladZprava = "Kuratko je napapano: ";
   }
 
-  for (size_t i = 0; i < hladZprava.size(); i++) {
-    mvwaddch(win, m + 1, i, hladZprava[i]);
-  }
+  log.append_line(hladZprava + hladStatus);
+  log.append_line(get_error());
 
-  for (size_t i = 0; i < hladStatus.size(); i++) {
-    mvwaddch(win, m + 1, hladZprava.size() + 1, hladStatus[i]);
-  }
+  win.refresh();
 
-  std::string s = get_error();
-  for (size_t i = 0; i < s.size(); i++) {
-    mvwaddch(win, m + 2, i, s[i]);
-  }
 }
