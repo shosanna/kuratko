@@ -3,9 +3,11 @@
 #include <string>
 #include <ncurses.h>
 #include <string.h>
+#include <random>
 #include "map.h"
 #include "game.h"
 #include "window.h"
+#include "status.h"
 
 using namespace std;
 
@@ -77,37 +79,32 @@ int main() {
   mainwin.refresh();
 
   Log log{ footer };
-  // for (size_t i = 0; i < 50; i++) {
-  //   log.append_line(std::to_string(i));
-  // }
 
   game_init_colors();
 
-  Map map{ mainwin, log, M, N };
+  Status status{sidebar};
+
+  Map map{ mainwin, log, status, M, N };
   map.reset();
 
-  Player kuratko{KURATKO, 5, 3, M, N};
+  Player kuratko{KURATKO, status, 5, 3, M, N};
   map(kuratko.x, kuratko.y) = KURATKO;
 
-  Player prasatko{PRASATKO, 1, 3, M, N};
+  Player prasatko{PRASATKO, status, 1, 3, M, N};
   map(prasatko.x, prasatko.y) = PRASATKO;
 
-  map.print(kuratko);
+  int kolacu = 10;
 
-  // map(23,3) = KOLAC;
-  // map(21,3) = KOLAC;
-  // map(21,5) = KOLAC;
-  // map(23,1) = KOLAC;
-  // map(21,1) = KOLAC;
-  // map(2,20) = KOLAC;
-  // map(8,16) = KOLAC;
+  std::random_device rd;
+  std::uniform_int_distribution<size_t> x_dis(0, N-1);
+  std::uniform_int_distribution<size_t> y_dis(0, M-1);
+  std::mt19937 gen(rd());
 
-  // map(5, 5) = ENEMY;
-  // WINDOW* win = newwin(M+10, N+10, 0, 0);
+  while (kolacu--) {
+    map(x_dis(gen), y_dis(gen)) = KOLAC;
+  }
 
-  // game_loop(log, kuratko, prasatko, mainwin, map);
-
-  getch();
+  game_loop(kuratko, prasatko, mainwin, map);
 
   return 0;
 }

@@ -22,7 +22,7 @@ $(PROGRAM): $(OBJ)
 	clang++ $(LIB) $(OBJ) -o $(EXECDIR)/$(PROGRAM)
 
 run: $(PROGRAM)
-	$(EXECDIR)/$(PROGRAM)
+	valgrind --log-file=val.txt $(EXECDIR)/$(PROGRAM)
 
 clean:
 	rm -f -- $(OBJDIR)/*.o $(EXECDIR)/$(PROGRAM)

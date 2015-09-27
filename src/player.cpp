@@ -62,6 +62,21 @@ void Player::move(Map& map, Direction dir) {
 
 void Player::napapat() {
   hlad += 1;
+
+  if (typ == KURATKO) {
+    status.hladiky["Kuratko"] = hlad;
+  } else if (typ == PRASATKO) {
+    status.hladiky["Prasatko"] = hlad;
+  }
+
+  // TODO - detailni status kuratka
+  // if (hladStatus == "0") {
+  //   hladZprava = "Kuratko ma hlad!: ";
+  // } else if (hladStatus == "3") {
+  //   hladZprava = "Kuratko je precpano: ";
+  // } else {
+  //   hladZprava = "Kuratko je napapano: ";
+  // }
 }
 
 int Player::zjistiHlad() {

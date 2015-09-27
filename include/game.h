@@ -8,7 +8,6 @@
 #include "map.h"
 
 void game_init_colors();
-void game_loop(Log& log, Player& kuratko, Player& prasatko, WINDOW* win,
-               Map& map);
+void game_loop(Player& kuratko, Player& prasatko, WINDOW* win, Map& map);
 
 #endif /* GAME_H */

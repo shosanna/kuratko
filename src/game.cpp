@@ -3,7 +3,7 @@
 #include "log.h"
 #include "game.h"
 
-void game_loop(Log& log, Player& kuratko, Player& prasatko, WINDOW* win, Map& map) {
+void game_loop(Player& kuratko, Player& prasatko, WINDOW* win, Map& map) {
   while (1) {
     std::vector<Direction> dirs = {
       Direction::UP,
@@ -13,7 +13,7 @@ void game_loop(Log& log, Player& kuratko, Player& prasatko, WINDOW* win, Map& ma
     };
 
     std::random_device rd;
-    std::uniform_int_distribution<size_t> dis(0, dirs.size());
+    std::uniform_int_distribution<size_t> dis(0, dirs.size() - 1);
     std::mt19937 gen(rd());
 
     prasatko.move(map, dirs[dis(gen)]);
