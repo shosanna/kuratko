@@ -13,6 +13,7 @@ namespace gui {
 class StatusWindow : public Window {
  public:
   std::map<std::string, int> hladiky;
+  std::map<std::string, int> stestiky;
 
   using Window::Window;
 

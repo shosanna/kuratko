@@ -19,6 +19,7 @@ void kuratko::Player::move(Map& map, int dx, int dy) {
   y += dy;
 
   kolac_check(map);
+  klacik_check(map);
 
   map(x, y) = typ;
 }
@@ -33,33 +34,34 @@ void kuratko::Player::move(Map& map, Direction dir) {
       if (y > 0) {
         --y;
       } else
-        map.log << "Kuratko se toula pryc!";
+        map.log << "Kuratko utika smerem k rybnicku!";
 
       break;
     case Direction::DOWN:
       if (y < M - 1) {
         ++y;
       } else
-        map.log << "Kuratko se toula pryc!";
+        map.log << "Kuratko se toula k jezevcum";
 
       break;
     case Direction::LEFT:
       if (x > 0) {
         --x;
       } else
-        map.log << "Kuratko jde ven z lesa:(";
+        map.log << "Kuratko miri do skalnateho lesa";
 
       break;
     case Direction::RIGHT:
       if (x < N - 1) {
         ++x;
       } else
-        map.log << "Kuratko jde ven z lesa:(";
+        map.log << "Kuratko jde smerem k lvickovi Eliasovi";
 
       break;
   }
 
   kolac_check(map);
+  klacik_check(map);
 
   map(x, y) = typ;
 }
@@ -83,8 +85,12 @@ void kuratko::Player::napapat() {
   // }
 }
 
-int kuratko::Player::zjistiHlad() {
+int kuratko::Player::zjisti_hlad() {
   return hlad;
+}
+
+int kuratko::Player::zjisti_stesti() {
+  return stesti;;
 }
 
 void kuratko::Player::move_to_target(Map& map) {
@@ -104,6 +110,28 @@ void kuratko::Player::move_to_target(Map& map) {
     int dx = target.first - x;
 
     move(map, dx / abs(dx), 0);
+  }
+}
+
+void kuratko::Player::hrat_s_klacikem() {
+  stesti += 1;
+
+  if (typ == KURATKO) {
+    status.stestiky["Kuratko"] = stesti;
+  } else if (typ == PRASATKO) {
+    status.stestiky["Prasatko"] = stesti;
+  }
+}
+
+void kuratko::Player::klacik_check(Map& map) {
+  if(map(x,y) == KLACIK) {
+    hrat_s_klacikem();
+
+   if (typ == KURATKO) {
+      map.log << "Kuratko si hraje s klacikem!"; 
+   } else if (typ == PRASATKO) {
+      map.log << "Prasatko stavi klacikovy domecek."; 
+   } 
   }
 }
 

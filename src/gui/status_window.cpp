@@ -22,6 +22,21 @@ void kuratko::gui::StatusWindow::refresh() {
     }
   }
 
+  waddstr(w, "\n");
+
+  int x,y;
+  getyx(w, y, x);
+  wmove(w, y, x+1);
+  waddstr(w, "Stesti:\n");
+
+  for (auto stesti : stestiky) {
+    int x,y;
+    getyx(w, y, x);
+    wmove(w, y, x+1);
+
+    wprintw(w, "%s: %d\n", stesti.first.c_str(), stesti.second);
+  }
+
   mvwprintw(w, 0, 1, "Status");
   ready_cursor();
 

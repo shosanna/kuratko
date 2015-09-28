@@ -39,7 +39,7 @@ class Map {
 
   void pathfind(Player&);
   bool is_valid(size_t x, size_t y);
-  void random_kolac();
+  void random_item(char item);
 
  private:
 };

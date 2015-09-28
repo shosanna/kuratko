@@ -37,4 +37,5 @@ void game_init_colors() {
   init_pair(1, COLOR_BLUE, COLOR_BLACK);
   init_pair(2, COLOR_BLACK, COLOR_YELLOW);
   init_pair(3, COLOR_BLACK, COLOR_RED);
+  init_pair(4, COLOR_CYAN, COLOR_BLACK);
 }

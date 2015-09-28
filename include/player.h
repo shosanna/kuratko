@@ -11,6 +11,7 @@ constexpr char EMPTY = '.';
 constexpr char KURATKO = '^';
 constexpr char KOLAC = 'O';
 constexpr char PRASATKO = '@';
+constexpr char KLACIK = 'x';
 
 enum class Direction { UP, DOWN, LEFT, RIGHT };
 
@@ -37,13 +38,17 @@ class Player {
   void move(Map& map, int dx, int dy);
   void move(Map& map, Direction dir);
   void napapat();
-  int zjistiHlad();
+  void hrat_s_klacikem();
+  int zjisti_hlad();
+  int zjisti_stesti();
 
   void move_to_target(Map& map);
   void kolac_check(Map& map);
+  void klacik_check(Map& map);
 
  private:
   int hlad = 0;
+  int stesti = 0;
 };
 }
 

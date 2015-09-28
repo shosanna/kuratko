@@ -40,6 +40,10 @@ void kuratko::Map::print() {
         case PRASATKO:
           curr = curr | COLOR_PAIR(3);
           break;
+
+        case KLACIK:
+          curr = curr | COLOR_PAIR(4);
+          break;
       }
 
       mvwaddch(win, y + 1, x + 1, curr);
@@ -118,11 +122,11 @@ bool kuratko::Map::is_valid(size_t x, size_t y) {
   return x < n && y < m;
 }
 
-void kuratko::Map::random_kolac() {
+void kuratko::Map::random_item(char item) {
   // TODO - race condition? see thread sanitizer
   std::random_device rd;
   std::uniform_int_distribution<size_t> x_dis(0, n - 1);
   std::uniform_int_distribution<size_t> y_dis(0, m - 1);
   std::mt19937 gen(rd());
-  (*this)(x_dis(gen), y_dis(gen)) = KOLAC;
+  (*this)(x_dis(gen), y_dis(gen)) = item;
 }

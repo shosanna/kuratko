@@ -90,9 +90,14 @@ void game() {
   map.reset();
 
   int kolacu = 5;
+  int klaciku = 3;
 
   while (kolacu--) {
-    map.random_kolac();
+    map.random_item(KOLAC);
+  }
+
+  while (klaciku--) {
+    map.random_item(KLACIK);
   }
 
   core::InputManager manager;
@@ -152,7 +157,7 @@ static void tapkat(Player& prasatko, Map& map) {
 static void kolace(Map& map) {
   while (1) {
     this_thread::sleep_for(chrono::seconds(5));
-    map.random_kolac();
+    map.random_item(KOLAC);
   }
 }
 
