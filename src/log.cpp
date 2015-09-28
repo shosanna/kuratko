@@ -17,6 +17,7 @@ Log& Log::operator<<(std::string s) {
 void Log::flush() {
   std::lock_guard<std::mutex> guard{m};
 
+
   while (!queue.empty()) {
     auto s = queue.front();
     queue.pop();

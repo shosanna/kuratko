@@ -1,6 +1,6 @@
 ASAN=-fsanitize=thread -fno-omit-frame-pointer
 INCLUDE=-Iinclude
-CXXFLAGS=$(INCLUDE) -g -Wall -Wextra -std=c++1y -O0 -pthread $(ASAN)
+CXXFLAGS=$(INCLUDE) -g -Wall -Wextra -std=c++14 -O0 -pthread $(ASAN)
 LIB=-lncurses -lpthread $(ASAN)
 
 CXX=clang++
@@ -8,16 +8,15 @@ EXECDIR=./bin
 OBJDIR=./obj
 PROGRAM=kuratko
 
-SRC=$(wildcard src/*.cpp src/*.c)
-TEMPOBJ=$(patsubst src/%.cpp, $(OBJDIR)/%.o, $(SRC))
-OBJ=$(patsubst stc/%.c, $(OBJDIR)/%.o, $(TEMPOBJ))
+SRC=$(wildcard src/*.cpp src/**/*.cpp)
+OBJ=$(patsubst src/%.cpp, $(OBJDIR)/%.o, $(SRC))
 
 .PHONY: $(PROGRAM)
 
 all: run
 
-# TODO - fix clang linker
 $(OBJDIR)/%.o: src/%.cpp
+	mkdir -p $(OBJDIR)/core
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 $(PROGRAM): $(OBJ)
@@ -30,4 +29,5 @@ valgrind: $(PROGRAM)
 	valgrind --log-file=tmp/valgrind.txt $(EXECDIR)/$(PROGRAM)
 
 clean:
-	rm -f -- $(OBJDIR)/*.o $(EXECDIR)/$(PROGRAM) tmp/*
+	rm -rf -- $(OBJDIR)/*.o $(EXECDIR)/$(PROGRAM) tmp/*
+	mkdir -p $(OBJDIR)/core
