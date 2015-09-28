@@ -16,7 +16,7 @@ class StatusWindow : public Window {
 
   using Window::Window;
 
-  void refresh();
+  virtual void refresh() override;
 };
 }
 }

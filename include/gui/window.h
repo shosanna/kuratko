@@ -20,10 +20,9 @@ class Window {
 
   void box() {
     ::box(w, 0, 0);
-    refresh();
   }
 
-  void refresh() {
+  virtual void refresh() {
     ::wrefresh(w);
   }
 

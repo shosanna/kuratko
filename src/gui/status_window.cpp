@@ -22,6 +22,9 @@ void kuratko::gui::StatusWindow::refresh() {
     }
   }
 
+  mvwprintw(w, 0, 1, "Status");
+  ready_cursor();
+
   Window::box();
   Window::refresh();
 }

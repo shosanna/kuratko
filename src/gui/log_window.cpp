@@ -7,6 +7,11 @@ void kuratko::gui::f(LogWindow& win, std::string s) {
   int x, y;
   getyx(win.w, y, x);
   wmove(win.w, y, x + 1);
-  win.box();
+
   win.refresh();
+}
+
+void kuratko::gui::LogWindow::refresh() {
+  box();
+  Window::refresh();
 }

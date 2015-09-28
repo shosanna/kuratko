@@ -21,6 +21,8 @@ class LogWindow : public Window {
       : Window(w, h, x, y),
         log(std::bind(f, std::ref(*this), std::placeholders::_1)) {
   }
+
+  virtual void refresh() override;
 };
 }
 }

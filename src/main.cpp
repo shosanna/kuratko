@@ -67,24 +67,20 @@ void game() {
 
   gui::Window mainwin(footer_pos, sidebar_pos, 0, 0);
   mainwin.box();
+  mainwin.refresh();
 
   gui::StatusWindow sidebar(footer_pos, maxx - sidebar_pos, 0, sidebar_pos);
   sidebar.box();
+  sidebar.refresh();
 
   gui::LogWindow footer(maxy - footer_pos, maxx, footer_pos - 1, 0);
   footer.box();
+  footer.ready_cursor();
+  footer.refresh();
 
   mvwprintw(mainwin, 0, 1, "Zviratkovy les");
   mainwin.refresh();
   mainwin.ready_cursor();
-
-  mvwprintw(sidebar, 0, 1, "Status");
-  sidebar.refresh();
-  sidebar.ready_cursor();
-
-  mvwprintw(footer, 0, 1, "Log");
-  footer.refresh();
-  footer.ready_cursor();
 
   scrollok(footer, TRUE);
 
