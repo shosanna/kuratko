@@ -3,13 +3,6 @@
 
 using namespace kuratko;
 
-void toula(Player&, std::string) {
-  // TODO
-  // if (p.typ == KURATKO) {
-  //   set_error(s);
-  // }
-}
-
 void kuratko::Player::move(Map& map, int dx, int dy) {
   std::lock_guard<std::mutex> guard{mtx};
 
