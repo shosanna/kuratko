@@ -98,26 +98,6 @@ void game() {
   core::InputManager manager;
 
   zviratka(map, M, N, sidebar, manager);
-
-  game_loop(manager, mainwin, map);
-
-}
-
-static void tapkat(Player& prasatko, Map& map) {
-  while (1) {
-    this_thread::sleep_for(chrono::milliseconds(800));
-    map.pathfind(prasatko);
-  }
-}
-
-static void kolace(Map& map) {
-  while (1) {
-    this_thread::sleep_for(chrono::seconds(5));
-    map.random_kolac();
-  }
-}
-
-void zviratka(Map& map, size_t M, size_t N, gui::StatusWindow& sidebar, core::InputManager& manager) {
   Player kuratko{KURATKO, sidebar, 5, 3, M, N};
   map(kuratko.x, kuratko.y) = KURATKO;
 
@@ -156,6 +136,25 @@ void zviratka(Map& map, size_t M, size_t N, gui::StatusWindow& sidebar, core::In
   thread t(tapkat, ref(prasatko), ref(map));
   thread t2(kolace, ref(map));
 
-  t.detach();
-  t2.detach();
+  game_loop(manager, mainwin, map);
+
+  t.join();
+  t2.join();
+}
+
+static void tapkat(Player& prasatko, Map& map) {
+  while (1) {
+    this_thread::sleep_for(chrono::milliseconds(800));
+    map.pathfind(prasatko);
+  }
+}
+
+static void kolace(Map& map) {
+  while (1) {
+    this_thread::sleep_for(chrono::seconds(5));
+    map.random_kolac();
+  }
+}
+
+void zviratka(Map& map, size_t M, size_t N, gui::StatusWindow& sidebar, core::InputManager& manager) {
 }

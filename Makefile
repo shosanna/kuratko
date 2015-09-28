@@ -1,7 +1,7 @@
 ASAN=-fsanitize=address -fno-omit-frame-pointer
 ASAN=
 INCLUDE=-Iinclude
-CXXFLAGS=$(INCLUDE) -g -Wall -Wextra -std=c++14 -O0 -pthread $(ASAN)
+CXXFLAGS=$(INCLUDE) -g3 -Wall -Wextra -std=c++14 -O0 -pthread $(ASAN)
 LIB=-lncurses -lpthread $(ASAN)
 
 CXX=clang++
