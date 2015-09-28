@@ -4,10 +4,9 @@
 #include <mutex>
 #include <utility>
 #include <ncurses.h>
-#include "utils.h"
-#include "status.h"
 
-class Map;
+#include "gui/status_window.h"
+#include "utils.h"
 
 constexpr char EMPTY = '.';
 constexpr char KURATKO = '^';
@@ -16,10 +15,13 @@ constexpr char PRASATKO = '@';
 
 enum class Direction { UP, DOWN, LEFT, RIGHT };
 
+namespace kuratko {
+class Map;
+
 class Player {
  public:
   char typ;
-  Status& status;
+  gui::StatusWindow& status;
   size_t x = 0;
   size_t y = 0;
   size_t M;
@@ -29,8 +31,9 @@ class Player {
 
   std::mutex mtx;
 
-  Player(char typ, Status& s, size_t x, size_t y, size_t M, size_t N)
-      : typ(typ), status(s), x(x), y(y), M(M), N(N) {}
+  Player(char typ, gui::StatusWindow& s, size_t x, size_t y, size_t M, size_t N)
+      : typ(typ), status(s), x(x), y(y), M(M), N(N) {
+  }
 
   void move(Map& map, int dx, int dy);
   void move(Map& map, Direction dir);
@@ -43,5 +46,6 @@ class Player {
  private:
   int hlad = 0;
 };
+}
 
 #endif /* PLAYER_H */

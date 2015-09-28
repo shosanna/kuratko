@@ -8,23 +8,25 @@
 #include <stdlib.h>
 #include "player.h"
 #include "core/log.h"
-#include "status.h"
+#include "gui/status_window.h"
 
+namespace kuratko {
 class Map {
  public:
   using Point = char;
 
-  kuratko::gui::Window& win;
-  kuratko::core::Log& log;
-  Status& status;
+  core::Log& log;
+  gui::Window& win;
+  gui::StatusWindow& status;
+
   size_t m;
   size_t n;
   std::vector<Point> data;
   std::mutex mtx;
 
-  Map(kuratko::gui::Window& win, kuratko::core::Log& log, Status& status, size_t m,
+  Map(kuratko::gui::Window& win, kuratko::core::Log& log, gui::StatusWindow& status, size_t m,
         size_t n)
-      : win(win), log{log}, status(status), m(m), n(n), data(m * n) {
+      : log(log), win(win), status(status), m(m), n(n), data(m * n) {
   }
 
   void reset();
@@ -41,5 +43,7 @@ class Map {
 
  private:
 };
+}
+
 
 #endif /* MAP_H */

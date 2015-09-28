@@ -2,6 +2,8 @@
 #include "utils.h"
 #include "map.h"
 
+using namespace kuratko;
+
 void toula(Player&, std::string) {
   // TODO
   // if (p.typ == KURATKO) {
@@ -9,7 +11,7 @@ void toula(Player&, std::string) {
   // }
 }
 
-void Player::move(Map& map, int dx, int dy) {
+void kuratko::Player::move(Map& map, int dx, int dy) {
   std::lock_guard<std::mutex> guard{mtx};
 
   map(x, y) = EMPTY;
@@ -22,7 +24,7 @@ void Player::move(Map& map, int dx, int dy) {
   map(x, y) = typ;
 }
 
-void Player::move(Map& map, Direction dir) {
+void kuratko::Player::move(Map& map, Direction dir) {
   std::lock_guard<std::mutex> guard{mtx};
 
   map(x, y) = EMPTY;
@@ -37,7 +39,7 @@ void Player::move(Map& map, Direction dir) {
 
       break;
     case Direction::DOWN:
-      if (y < M-1) {
+      if (y < M - 1) {
         clear_error();
         ++y;
       } else
@@ -53,7 +55,7 @@ void Player::move(Map& map, Direction dir) {
 
       break;
     case Direction::RIGHT:
-      if (x < N-1) {
+      if (x < N - 1) {
         clear_error();
         ++x;
       } else
@@ -67,7 +69,7 @@ void Player::move(Map& map, Direction dir) {
   map(x, y) = typ;
 }
 
-void Player::napapat() {
+void kuratko::Player::napapat() {
   hlad += 1;
 
   if (typ == KURATKO) {
@@ -86,11 +88,11 @@ void Player::napapat() {
   // }
 }
 
-int Player::zjistiHlad() {
+int kuratko::Player::zjistiHlad() {
   return hlad;
 }
 
-void Player::move_to_target(Map& map) {
+void kuratko::Player::move_to_target(Map& map) {
   if (map(target.first, target.second) != KOLAC) {
     map.log << "Prasatko: \"Nekdo mi spapal kolac, musim najit novy\" :(";
     has_target = false;
@@ -110,8 +112,8 @@ void Player::move_to_target(Map& map) {
   }
 }
 
-void Player::kolac_check(Map& map) {
-  if (map(x,y) == KOLAC) {
+void kuratko::Player::kolac_check(Map& map) {
+  if (map(x, y) == KOLAC) {
     napapat();
     has_target = false;
 
@@ -122,8 +124,8 @@ void Player::kolac_check(Map& map) {
     }
   }
 
-  if (map(x,y) == PRASATKO) {
-    if(typ == KURATKO) {
+  if (map(x, y) == PRASATKO) {
+    if (typ == KURATKO) {
       map.log.append_line("Kuratko se potkalo s Prasatkem :)");
     }
   }

@@ -8,9 +8,10 @@
 
 #include "map.h"
 #include "game.h"
-#include "status.h"
 #include "core/input_manager.h"
+
 #include "gui/log_window.h"
+#include "gui/status_window.h"
 #include "gui/window.h"
 
 using namespace std;
@@ -67,7 +68,7 @@ void game() {
   gui::Window mainwin(footer_pos, sidebar_pos, 0, 0);
   mainwin.box();
 
-  gui::Window sidebar(footer_pos, maxx - sidebar_pos, 0, sidebar_pos);
+  gui::StatusWindow sidebar(footer_pos, maxx - sidebar_pos, 0, sidebar_pos);
   sidebar.box();
 
   gui::LogWindow footer(maxy - footer_pos, maxx, footer_pos - 1, 0);
@@ -89,15 +90,13 @@ void game() {
 
   game_init_colors();
 
-  Status status{sidebar};
-
-  Map map{ mainwin, footer.log, status, M, N };
+  Map map{ mainwin, footer.log, sidebar, M, N };
   map.reset();
 
-  Player kuratko{KURATKO, status, 5, 3, M, N};
+  Player kuratko{KURATKO, sidebar, 5, 3, M, N};
   map(kuratko.x, kuratko.y) = KURATKO;
 
-  Player prasatko{PRASATKO, status, 1, 3, M, N};
+  Player prasatko{PRASATKO, sidebar, 1, 3, M, N};
   map(prasatko.x, prasatko.y) = PRASATKO;
 
   int kolacu = 5;

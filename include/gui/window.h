@@ -13,7 +13,8 @@ class Window {
   Window(size_t w, size_t h, size_t x = 0, size_t y = 0)
       : w{newwin(w, h, x, y)} {
   }
-  ~Window() {
+
+  virtual ~Window() {
     delwin(w);
   }
 
@@ -21,6 +22,7 @@ class Window {
     ::box(w, 0, 0);
     refresh();
   }
+
   void refresh() {
     ::wrefresh(w);
   }
