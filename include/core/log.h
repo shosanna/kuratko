@@ -7,20 +7,26 @@
 #include <ncurses.h>
 #include <queue>
 #include "window.h"
+#include <functional>
+
+namespace kuratko {
+namespace core {
 
 class Log {
-  Window& w;
+  using Handler = std::function<void(std::string)>;
+  Handler h_;
   std::string data;
   std::queue<std::string> queue;
   std::mutex m;
 
  public:
-  Log(Window& w) : w(w) {}
+  Log(Handler h) : h_(h) {
+  }
 
   void append_line(std::string s);
   Log& operator<<(std::string);
   void flush();
-
 };
-
+}
+}
 #endif /* LOG_H */

@@ -7,7 +7,7 @@
 #include <string>
 #include <stdlib.h>
 #include "player.h"
-#include "log.h"
+#include "core/log.h"
 #include "status.h"
 
 class Map {
@@ -15,14 +15,14 @@ class Map {
   using Point = char;
 
   Window& win;
-  Log& log;
+  kuratko::core::Log& log;
   Status& status;
   size_t m;
   size_t n;
   std::vector<Point> data;
   std::mutex mtx;
 
-  Map(Window& win, Log& log, Status& status, size_t m, size_t n)
+  Map(Window& win, kuratko::core::Log& log, Status& status, size_t m, size_t n)
       : win(win), log{log}, status(status), m(m), n(n), data(m * n) {
   }
 

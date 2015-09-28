@@ -3,10 +3,10 @@
 
 #include <iostream>
 #include <ncurses.h>
-#include "player.h"
-#include "log.h"
-#include "map.h"
+#include "core/log.h"
 #include "core/input_manager.h"
+#include "map.h"
+#include "player.h"
 
 void game_init_colors();
 void game_loop(kuratko::core::InputManager& manager, WINDOW* win, Map& map);

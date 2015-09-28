@@ -3,8 +3,8 @@
 #include <ncurses.h>
 #include <vector>
 #include <random>
-#include "log.h"
 #include "game.h"
+#include "core/log.h"
 #include "core/input_manager.h"
 
 using namespace kuratko;

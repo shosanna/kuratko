@@ -1,20 +1,22 @@
 #include <ncurses.h>
 #include <ostream>
 #include <mutex>
-#include "log.h"
+#include "core/log.h"
 
-void Log::append_line(std::string s) {
+using namespace kuratko::core;
+
+void kuratko::core::Log::append_line(std::string s) {
   std::lock_guard<std::mutex> guard{m};
 
   queue.push(s);
 }
 
-Log& Log::operator<<(std::string s) {
+Log& kuratko::core::Log::operator<<(std::string s) {
   append_line(s);
   return *this;
 }
 
-void Log::flush() {
+void kuratko::core::Log::flush() {
   std::lock_guard<std::mutex> guard{m};
 
 
@@ -22,13 +24,6 @@ void Log::flush() {
     auto s = queue.front();
     queue.pop();
 
-    std::string msg = s + "\n";
-    waddstr(w, msg.c_str());
-
-    int x, y;
-    getyx(w.w, y, x);
-    wmove(w, y, x + 1);
-    w.box();
-    w.refresh();
+    h_(s);
   }
 }

@@ -10,6 +10,7 @@
 #include "status.h"
 #include <thread>
 #include "core/input_manager.h"
+#include "gui/log_window.h"
 
 using namespace std;
 using namespace kuratko;
@@ -68,7 +69,7 @@ void game() {
   Window sidebar(footer_pos, maxx - sidebar_pos, 0, sidebar_pos);
   sidebar.box();
 
-  Window footer(maxy - footer_pos, maxx, footer_pos - 1, 0);
+  gui::LogWindow footer(maxy - footer_pos, maxx, footer_pos - 1, 0);
   footer.box();
 
   mvwprintw(mainwin, 0, 1, "Zviratkovy les");
@@ -85,13 +86,11 @@ void game() {
 
   scrollok(footer, TRUE);
 
-  Log log{ footer };
-
   game_init_colors();
 
   Status status{sidebar};
 
-  Map map{ mainwin, log, status, M, N };
+  Map map{ mainwin, footer.log, status, M, N };
   map.reset();
 
   Player kuratko{KURATKO, status, 5, 3, M, N};

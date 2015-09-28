@@ -17,6 +17,8 @@ all: run
 
 $(OBJDIR)/%.o: src/%.cpp
 	mkdir -p $(OBJDIR)/core
+	mkdir -p $(OBJDIR)/gui
+
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 $(PROGRAM): $(OBJ)
@@ -30,4 +32,3 @@ valgrind: $(PROGRAM)
 
 clean:
 	rm -rf -- $(OBJDIR)/*.o $(EXECDIR)/$(PROGRAM) tmp/*
-	mkdir -p $(OBJDIR)/core
