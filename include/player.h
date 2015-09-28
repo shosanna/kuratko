@@ -25,13 +25,13 @@ class Player {
   size_t y = 0;
   size_t M;
   size_t N;
-  bool has_target = false;
+  bool has_target;
   std::pair<size_t, size_t> target;
 
   std::mutex mtx;
 
   Player(char typ, gui::StatusWindow& s, size_t x, size_t y, size_t M, size_t N)
-      : typ(typ), status(s), x(x), y(y), M(M), N(N) {
+      : typ(typ), status(s), x(x), y(y), M(M), N(N), has_target(false) {
   }
 
   void move(Map& map, int dx, int dy);

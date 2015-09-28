@@ -17,6 +17,7 @@
 using namespace std;
 using namespace kuratko;
 
+void zviratka(Map& map, size_t M, size_t N, gui::StatusWindow& sidebar, core::InputManager& manager);
 void game();
 static void tapkat(Player& prasatko, Map& map);
 static void kolace(Map& map);
@@ -74,7 +75,6 @@ void game() {
   sidebar.refresh();
 
   gui::LogWindow footer(maxy - footer_pos, maxx, footer_pos - 1, 0);
-  footer.box();
   footer.ready_cursor();
   footer.refresh();
 
@@ -89,12 +89,6 @@ void game() {
   Map map{ mainwin, footer.log, sidebar, M, N };
   map.reset();
 
-  Player kuratko{KURATKO, sidebar, 5, 3, M, N};
-  map(kuratko.x, kuratko.y) = KURATKO;
-
-  Player prasatko{PRASATKO, sidebar, 1, 3, M, N};
-  map(prasatko.x, prasatko.y) = PRASATKO;
-
   int kolacu = 5;
 
   while (kolacu--) {
@@ -102,6 +96,33 @@ void game() {
   }
 
   core::InputManager manager;
+
+  zviratka(map, M, N, sidebar, manager);
+
+  game_loop(manager, mainwin, map);
+
+}
+
+static void tapkat(Player& prasatko, Map& map) {
+  while (1) {
+    this_thread::sleep_for(chrono::milliseconds(800));
+    map.pathfind(prasatko);
+  }
+}
+
+static void kolace(Map& map) {
+  while (1) {
+    this_thread::sleep_for(chrono::seconds(5));
+    map.random_kolac();
+  }
+}
+
+void zviratka(Map& map, size_t M, size_t N, gui::StatusWindow& sidebar, core::InputManager& manager) {
+  Player kuratko{KURATKO, sidebar, 5, 3, M, N};
+  map(kuratko.x, kuratko.y) = KURATKO;
+
+  Player prasatko{PRASATKO, sidebar, 1, 3, M, N};
+  map(prasatko.x, prasatko.y) = PRASATKO;
 
   auto f = [&kuratko, &map](int c) {
     switch (c) {
@@ -135,23 +156,6 @@ void game() {
   thread t(tapkat, ref(prasatko), ref(map));
   thread t2(kolace, ref(map));
 
-  game_loop(manager, mainwin, map);
-
-  t.join();
-  t2.join();
+  t.detach();
+  t2.detach();
 }
-
-static void tapkat(Player& prasatko, Map& map) {
-  while (1) {
-    this_thread::sleep_for(chrono::milliseconds(800));
-    map.pathfind(prasatko);
-  }
-}
-
-static void kolace(Map& map) {
-  while (1) {
-    this_thread::sleep_for(chrono::seconds(5));
-    map.random_kolac();
-  }
-}
-
