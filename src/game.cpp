@@ -8,20 +8,55 @@
 
 using namespace std;
 
-void tapkat(Player& prasatko, Map& map) {
-  while(1) {
+static void tapkat(Player& prasatko, Map& map) {
+  while (1) {
     this_thread::sleep_for(chrono::milliseconds(800));
-
-    map.log << "pathfinding";
     map.pathfind(prasatko);
   }
 }
 
-void kolace(Map& map) {
+static void kolace(Map& map) {
   while (1) {
     this_thread::sleep_for(chrono::seconds(5));
     map.random_kolac();
   }
+}
+
+static void update(Player& kuratko, Map& map) {
+  int c = getch();
+  if (c == ERR) return;
+
+  switch (c) {
+    case 'a':
+    case KEY_LEFT:
+    case 'h':
+      kuratko.move(map, Direction::LEFT);
+      break;
+    case 'w':
+    case KEY_UP:
+    case 'k':
+      kuratko.move(map, Direction::UP);
+      break;
+    case 's':
+    case KEY_DOWN:
+    case 'j':
+      kuratko.move(map, Direction::DOWN);
+      break;
+    case 'd':
+    case KEY_RIGHT:
+    case 'l':
+      kuratko.move(map, Direction::RIGHT);
+      break;
+    case 'q':
+      exit(0);
+  }
+}
+
+static void render(WINDOW* win, Map& map) {
+  map.log.flush();
+  map.print();
+  wmove(win, 50, 50);
+  wrefresh(win);
 }
 
 void game_loop(Player& kuratko, Player& prasatko, WINDOW* win, Map& map) {
@@ -29,38 +64,8 @@ void game_loop(Player& kuratko, Player& prasatko, WINDOW* win, Map& map) {
   thread t2(kolace, ref(map));
 
   while (1) {
-    map.log.flush();
-    map.print();
-    wmove(win, 50, 50);
-    wrefresh(win);
-
-    int c = getch();
-    if (c == ERR) continue;
-
-    switch (c) {
-      case 'a':
-      case KEY_LEFT:
-      case 'h':
-        kuratko.move(map, Direction::LEFT);
-        break;
-      case 'w':
-      case KEY_UP:
-      case 'k':
-        kuratko.move(map, Direction::UP);
-        break;
-      case 's':
-      case KEY_DOWN:
-      case 'j':
-        kuratko.move(map, Direction::DOWN);
-        break;
-      case 'd':
-      case KEY_RIGHT:
-      case 'l':
-        kuratko.move(map, Direction::RIGHT);
-        break;
-      case 'q':
-        exit(0);
-    }
+    update(kuratko, map);
+    render(win, map);
   }
 
   t.join();

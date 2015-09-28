@@ -12,6 +12,8 @@
 
 using namespace std;
 
+void game();
+
 struct Enable_curses {
   Enable_curses() {
     initscr();
@@ -23,7 +25,12 @@ struct Enable_curses {
 
 int main() {
   Enable_curses c__{};
+  game();
 
+  return 0;
+}
+
+void game() {
   start_color();
   init_pair(1, COLOR_RED, COLOR_BLUE);
 
@@ -45,9 +52,6 @@ int main() {
   if (maxy > maxx / 2) {
       yratio = 0.6;
   }
-
-
-  // TODO - zapnout ASAN
 
   int sidebar_pos = static_cast<int>(maxx * xratio);
   int footer_pos = static_cast<int>(maxy * yratio);
@@ -77,9 +81,6 @@ int main() {
 
   scrollok(footer, TRUE);
 
-  wprintw(mainwin, "dalsi");
-  mainwin.refresh();
-
   Log log{ footer };
 
   game_init_colors();
@@ -102,6 +103,4 @@ int main() {
   }
 
   game_loop(kuratko, prasatko, mainwin, map);
-
-  return 0;
 }

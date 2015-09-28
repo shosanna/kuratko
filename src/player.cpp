@@ -91,6 +91,12 @@ int Player::zjistiHlad() {
 }
 
 void Player::move_to_target(Map& map) {
+  if (map(target.first, target.second) != KOLAC) {
+    map.log << "Prasatko: \"Nekdo mi spapal kolac, musim najit novy\" :(";
+    has_target = false;
+    return;
+  }
+
   if (x == target.first && y == target.second) {
     has_target = false;
   } else if (x == target.first) {

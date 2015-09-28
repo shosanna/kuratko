@@ -63,7 +63,6 @@ struct Pair_hash {
 
 void Map::pathfind(Player& p) {
   if (p.has_target) {
-    log.append_line("moving to target");
     p.move_to_target(*this);
     return;
   }
@@ -96,9 +95,6 @@ void Map::pathfind(Player& p) {
         if ((*this)(next.first, next.second) == KOLAC) {
           p.target = next;
           p.has_target = true;
-
-          log << "set target to " << std::to_string(next.first) << " "
-              << std::to_string(next.second);
           found = true;
           goto found_kolac;
         } else {
