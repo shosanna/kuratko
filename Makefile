@@ -1,4 +1,5 @@
-ASAN=-fsanitize=thread -fno-omit-frame-pointer
+ASAN=-fsanitize=address -fno-omit-frame-pointer
+ASAN=
 INCLUDE=-Iinclude
 CXXFLAGS=$(INCLUDE) -g -Wall -Wextra -std=c++14 -O0 -pthread $(ASAN)
 LIB=-lncurses -lpthread $(ASAN)
@@ -31,4 +32,4 @@ valgrind: $(PROGRAM)
 	valgrind --log-file=tmp/valgrind.txt $(EXECDIR)/$(PROGRAM)
 
 clean:
-	rm -rf -- $(OBJDIR)/*.o $(EXECDIR)/$(PROGRAM) tmp/*
+	rm -rf -- $(OBJDIR)/* $(EXECDIR)/$(PROGRAM) tmp/*
