@@ -4,13 +4,14 @@
 #include <ncurses.h>
 #include <string.h>
 #include <random>
+#include <thread>
+
 #include "map.h"
 #include "game.h"
-#include "window.h"
 #include "status.h"
-#include <thread>
 #include "core/input_manager.h"
 #include "gui/log_window.h"
+#include "gui/window.h"
 
 using namespace std;
 using namespace kuratko;
@@ -63,10 +64,10 @@ void game() {
   size_t M = footer_pos - 2;
   size_t N = sidebar_pos - 2;
 
-  Window mainwin(footer_pos, sidebar_pos, 0, 0);
+  gui::Window mainwin(footer_pos, sidebar_pos, 0, 0);
   mainwin.box();
 
-  Window sidebar(footer_pos, maxx - sidebar_pos, 0, sidebar_pos);
+  gui::Window sidebar(footer_pos, maxx - sidebar_pos, 0, sidebar_pos);
   sidebar.box();
 
   gui::LogWindow footer(maxy - footer_pos, maxx, footer_pos - 1, 0);

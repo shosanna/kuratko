@@ -6,8 +6,9 @@
 #include <string>
 #include <ncurses.h>
 #include <queue>
-#include "window.h"
 #include <functional>
+
+#include "gui/window.h"
 
 namespace kuratko {
 namespace core {

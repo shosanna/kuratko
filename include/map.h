@@ -14,7 +14,7 @@ class Map {
  public:
   using Point = char;
 
-  Window& win;
+  kuratko::gui::Window& win;
   kuratko::core::Log& log;
   Status& status;
   size_t m;
@@ -22,7 +22,8 @@ class Map {
   std::vector<Point> data;
   std::mutex mtx;
 
-  Map(Window& win, kuratko::core::Log& log, Status& status, size_t m, size_t n)
+  Map(kuratko::gui::Window& win, kuratko::core::Log& log, Status& status, size_t m,
+        size_t n)
       : win(win), log{log}, status(status), m(m), n(n), data(m * n) {
   }
 

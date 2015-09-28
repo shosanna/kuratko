@@ -5,10 +5,11 @@
 #include <string>
 #include <functional>
 #include "core/log.h"
-#include "window.h"
+#include "gui/window.h"
 
 namespace kuratko {
 namespace gui {
+
 class LogWindow;
 void f(LogWindow& win, std::string s);
 

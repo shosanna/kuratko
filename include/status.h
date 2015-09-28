@@ -3,14 +3,14 @@
 
 #include <map>
 #include <string>
-#include "window.h"
+#include "gui/window.h"
 
 class Status {
  public:
-  Window& win;
+  kuratko::gui::Window& win;
   std::map<std::string, int> hladiky;
 
-  Status(Window& win) : win(win) {
+  Status(kuratko::gui::Window& win) : win(win) {
   }
 
   void print();
