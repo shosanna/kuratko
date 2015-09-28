@@ -33,6 +33,13 @@ class Player {
 
   Player(char typ, gui::StatusWindow& s, size_t x, size_t y, size_t M, size_t N)
       : typ(typ), status(s), x(x), y(y), M(M), N(N), has_target(false) {
+    if (typ == KURATKO) {
+      s.stestiky["Kuratko"] = stesti;
+      s.hladiky["Kuratko"] = hlad;
+    } else if (typ == PRASATKO) {
+      s.stestiky["Prasatko"] = stesti;
+      s.hladiky["Prasatko"] = hlad;
+    }
   }
 
   void move(Map& map, int dx, int dy);

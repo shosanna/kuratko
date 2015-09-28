@@ -5,7 +5,9 @@ using namespace kuratko::gui;
 void kuratko::gui::StatusWindow::refresh() {
   wmove(w, 1, 1);
 
+  wattron(w, A_UNDERLINE);
   waddstr(w, "Hladiky:\n");
+  wattroff(w, A_UNDERLINE);
 
   for (auto hladik : hladiky) {
     int x,y;
@@ -22,12 +24,12 @@ void kuratko::gui::StatusWindow::refresh() {
     }
   }
 
-  waddstr(w, "\n");
-
   int x,y;
   getyx(w, y, x);
   wmove(w, y, x+1);
-  waddstr(w, "Stesti:\n");
+  wattron(w, A_UNDERLINE);
+  waddstr(w, "Stestiky:\n");
+  wattroff(w, A_UNDERLINE);
 
   for (auto stesti : stestiky) {
     int x,y;
