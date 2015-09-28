@@ -5,6 +5,7 @@ using namespace kuratko;
 
 void kuratko::Player::move(Map& map, int dx, int dy) {
   std::lock_guard<std::mutex> guard{mtx};
+  uprav_statusy(); 
 
   map(x, y) = EMPTY;
 
@@ -20,35 +21,48 @@ void kuratko::Player::move(Map& map, int dx, int dy) {
 void kuratko::Player::move(Map& map, Direction dir) {
   std::lock_guard<std::mutex> guard{mtx};
 
+  uprav_statusy(); 
   map(x, y) = EMPTY;
 
   switch (dir) {
     case Direction::UP:
       if (y > 0) {
         --y;
-      } else
+      } else {
+        hlad -= 1;
         map.log << "Kuratko utika smerem k rybnicku!";
+        map.log << "Z toho mu vyhladlo :(";
+      }
 
       break;
     case Direction::DOWN:
       if (y < M - 1) {
         ++y;
-      } else
+      } else {
+        hlad -= 1;
         map.log << "Kuratko se toula k jezevcum";
+        map.log << "Z toho mu vyhladlo :(";
+      }
 
       break;
     case Direction::LEFT:
       if (x > 0) {
         --x;
-      } else
+      } else {
+        hlad -= 1;
         map.log << "Kuratko miri do skalnateho lesa";
+        map.log << "Z toho mu vyhladlo :(";
+      }
 
       break;
     case Direction::RIGHT:
       if (x < N - 1) {
         ++x;
-      } else
+      } else {
+        hlad -= 1;
         map.log << "Kuratko jde smerem k lvickovi Eliasovi";
+        map.log << "Z toho mu vyhladlo :(";
+      }
 
       break;
   }
@@ -62,11 +76,7 @@ void kuratko::Player::move(Map& map, Direction dir) {
 void kuratko::Player::napapat() {
   hlad += 1;
 
-  if (typ == KURATKO) {
-    status.hladiky["Kuratko"] = hlad;
-  } else if (typ == PRASATKO) {
-    status.hladiky["Prasatko"] = hlad;
-  }
+  uprav_statusy();
 
   // TODO - detailni status kuratka
   // if (hladStatus == "0") {
@@ -108,12 +118,9 @@ void kuratko::Player::move_to_target(Map& map) {
 
 void kuratko::Player::hrat_s_klacikem() {
   stesti += 1;
+  hlad -= 1;
 
-  if (typ == KURATKO) {
-    status.stestiky["Kuratko"] = stesti;
-  } else if (typ == PRASATKO) {
-    status.stestiky["Prasatko"] = stesti;
-  }
+  uprav_statusy();
 }
 
 void kuratko::Player::klacik_check(Map& map) {
@@ -144,5 +151,15 @@ void kuratko::Player::kolac_check(Map& map) {
     if (typ == KURATKO) {
       map.log.append_line("Kuratko se potkalo s Prasatkem :)");
     }
+  }
+}
+
+void kuratko::Player::uprav_statusy() {
+  if (typ == KURATKO) {
+    status.stestiky["Kuratko"] = stesti;
+    status.hladiky["Kuratko"] = hlad;
+  } else if (typ == PRASATKO) {
+    status.stestiky["Prasatko"] = stesti;
+    status.hladiky["Prasatko"] = hlad;
   }
 }

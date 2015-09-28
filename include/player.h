@@ -49,6 +49,7 @@ class Player {
   int zjisti_hlad();
   int zjisti_stesti();
 
+  void uprav_statusy();
   void move_to_target(Map& map);
   void kolac_check(Map& map);
   void klacik_check(Map& map);
