@@ -9,10 +9,14 @@
 #include "window.h"
 #include "status.h"
 #include <thread>
+#include "core/input_manager.h"
 
 using namespace std;
+using namespace kuratko;
 
 void game();
+static void tapkat(Player& prasatko, Map& map);
+static void kolace(Map& map);
 
 struct Enable_curses {
   Enable_curses() {
@@ -102,5 +106,57 @@ void game() {
     map.random_kolac();
   }
 
-  game_loop(kuratko, prasatko, mainwin, map);
+  core::InputManager manager;
+
+  auto f = [&kuratko, &map](int c) {
+    switch (c) {
+      case 'a':
+      case KEY_LEFT:
+      case 'h':
+        kuratko.move(map, Direction::LEFT);
+        break;
+      case 'w':
+      case KEY_UP:
+      case 'k':
+        kuratko.move(map, Direction::UP);
+        break;
+      case 's':
+      case KEY_DOWN:
+      case 'j':
+        kuratko.move(map, Direction::DOWN);
+        break;
+      case 'd':
+      case KEY_RIGHT:
+      case 'l':
+        kuratko.move(map, Direction::RIGHT);
+        break;
+      case 'q':
+        exit(0);
+    }
+  };
+
+  manager.add(f);
+
+  thread t(tapkat, ref(prasatko), ref(map));
+  thread t2(kolace, ref(map));
+
+  game_loop(manager, mainwin, map);
+
+  t.join();
+  t2.join();
 }
+
+static void tapkat(Player& prasatko, Map& map) {
+  while (1) {
+    this_thread::sleep_for(chrono::milliseconds(800));
+    map.pathfind(prasatko);
+  }
+}
+
+static void kolace(Map& map) {
+  while (1) {
+    this_thread::sleep_for(chrono::seconds(5));
+    map.random_kolac();
+  }
+}
+
