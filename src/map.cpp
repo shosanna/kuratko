@@ -46,11 +46,6 @@ void kuratko::Map::print() {
     }
   }
 
-  std::string err = get_error();
-  if (err.size()) {
-    log.append_line(err);
-  }
-
   // TODO - check out if this is still correct
   // status.print();
   status.refresh();

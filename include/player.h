@@ -6,7 +6,6 @@
 #include <ncurses.h>
 
 #include "gui/status_window.h"
-#include "utils.h"
 
 constexpr char EMPTY = '.';
 constexpr char KURATKO = '^';

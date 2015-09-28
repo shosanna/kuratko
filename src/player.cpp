@@ -1,5 +1,4 @@
 #include "player.h"
-#include "utils.h"
 #include "map.h"
 
 using namespace kuratko;
@@ -32,34 +31,30 @@ void kuratko::Player::move(Map& map, Direction dir) {
   switch (dir) {
     case Direction::UP:
       if (y > 0) {
-        clear_error();
         --y;
       } else
-        toula(*this, "Kuratko se toula pryc!");
+        map.log << "Kuratko se toula pryc!";
 
       break;
     case Direction::DOWN:
       if (y < M - 1) {
-        clear_error();
         ++y;
       } else
-        toula(*this, "Kuratko se toula pryc!");
+        map.log << "Kuratko se toula pryc!";
 
       break;
     case Direction::LEFT:
       if (x > 0) {
-        clear_error();
         --x;
       } else
-        toula(*this, "Kuratko jde ven z lesa:(");
+        map.log << "Kuratko jde ven z lesa:(";
 
       break;
     case Direction::RIGHT:
       if (x < N - 1) {
-        clear_error();
         ++x;
       } else
-        toula(*this, "Kuratko jde ven z lesa:(");
+        map.log << "Kuratko jde ven z lesa:(";
 
       break;
   }
