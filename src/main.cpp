@@ -17,7 +17,6 @@
 using namespace std;
 using namespace kuratko;
 
-void zviratka(Map& map, size_t M, size_t N, gui::StatusWindow& sidebar, core::InputManager& manager);
 void game();
 static void tapkat(Player& prasatko, Map& map);
 static void kolace(Map& map);
@@ -102,7 +101,6 @@ void game() {
 
   core::InputManager manager;
 
-  zviratka(map, M, N, sidebar, manager);
   Player kuratko{KURATKO, sidebar, 5, 3, M, N};
   map(kuratko.x, kuratko.y) = KURATKO;
 
@@ -161,5 +159,3 @@ static void kolace(Map& map) {
   }
 }
 
-void zviratka(Map& map, size_t M, size_t N, gui::StatusWindow& sidebar, core::InputManager& manager) {
-}
