@@ -17,8 +17,8 @@ class LogWindow : public Window {
  public:
   core::Log log;
 
-  LogWindow(size_t w, size_t h, size_t x = 0, size_t y = 0)
-      : Window(w, h, x, y),
+  LogWindow(size_t h, size_t w, size_t y = 0, size_t x = 0)
+      : Window(h, w, y, x),
         log(std::bind(f, std::ref(*this), std::placeholders::_1)) {
   }
 

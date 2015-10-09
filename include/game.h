@@ -9,7 +9,7 @@
 #include "player.h"
 
 void game_init_colors();
-void game_loop(kuratko::core::InputManager& manager, WINDOW* win, kuratko::MapWindow& map);
+void game_loop(kuratko::core::InputManager& manager, kuratko::MapWindow& map);
 void game();
 
 #endif /* GAME_H */

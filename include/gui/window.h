@@ -10,8 +10,8 @@ class Window {
  public:
   WINDOW* w;
 
-  Window(size_t w, size_t h, size_t x = 0, size_t y = 0)
-      : w{newwin(w, h, x, y)} {
+  Window(size_t h, size_t w, size_t y = 0, size_t x = 0)
+      : w{newwin(h, w, y, x)} {
   }
 
   virtual ~Window() {

@@ -9,14 +9,14 @@
 #include "player.h"
 #include "core/log.h"
 #include "gui/status_window.h"
+#include "gui/window.h"
 
 namespace kuratko {
-class MapWindow {
+class MapWindow : public gui::Window {
  public:
   using Point = char;
 
   core::Log& log;
-  gui::Window& win;
   gui::StatusWindow& status;
 
   size_t m;
@@ -24,9 +24,14 @@ class MapWindow {
   std::vector<Point> data;
   std::mutex mtx;
 
-  MapWindow(kuratko::gui::Window& win, kuratko::core::Log& log, gui::StatusWindow& status, size_t m,
+  MapWindow(int h, int w, int y, int x, kuratko::core::Log& log, gui::StatusWindow& status, size_t m,
         size_t n)
-      : log(log), win(win), status(status), m(m), n(n), data(m * n) {
+      : Window(h,w,y,x), log(log), status(status), m(m), n(n), data(m * n) {
+
+        mvwprintw(*this, 0, 1, "Zviratkovy les");
+        box();
+        ready_cursor();
+        refresh();
   }
 
   void reset();

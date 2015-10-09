@@ -36,17 +36,18 @@ static void update(core::InputManager& manager) {
   manager.handle(c);
 }
 
-static void render(WINDOW* win, MapWindow& map) {
+static void render(MapWindow& map) {
   map.log.flush();
   map.print();
-  wmove(win, 50, 50);
-  wrefresh(win);
+  map.refresh();
+  // wmove(map.win, 50, 50);
+  // wrefresh(map.win);
 }
 
-void game_loop(core::InputManager& manager, WINDOW* win, MapWindow& map) {
+void game_loop(core::InputManager& manager, MapWindow& map) {
   while (1) {
     update(manager);
-    render(win, map);
+    render(map);
   }
 }
 
@@ -88,27 +89,20 @@ void game() {
   size_t M = footer_pos - 2;
   size_t N = sidebar_pos - 2;
 
-  gui::Window mainwin(footer_pos, sidebar_pos, 0, 0);
-  mainwin.box();
-  mainwin.refresh();
-
   gui::StatusWindow sidebar(footer_pos, maxx - sidebar_pos, 0, sidebar_pos);
   sidebar.box();
   sidebar.refresh();
 
-  gui::LogWindow footer(maxy - footer_pos, maxx, footer_pos - 1, 0);
+  gui::LogWindow footer(maxy - footer_pos, maxx, footer_pos, 0);
   footer.ready_cursor();
   footer.refresh();
 
-  mvwprintw(mainwin, 0, 1, "Zviratkovy les");
-  mainwin.refresh();
-  mainwin.ready_cursor();
-
   scrollok(footer, TRUE);
+
 
   game_init_colors();
 
-  MapWindow map{ mainwin, footer.log, sidebar, M, N };
+  MapWindow map{ footer_pos, sidebar_pos, 0, 0, footer.log, sidebar, M, N };
   map.reset();
 
   int kolacu = 5;
@@ -162,7 +156,7 @@ void game() {
   thread t(tapkat, ref(prasatko), ref(map));
   thread t2(kolace, ref(map));
 
-  game_loop(manager, mainwin, map);
+  game_loop(manager, map);
 
   t.join();
   t2.join();

@@ -46,7 +46,7 @@ void kuratko::MapWindow::print() {
           break;
       }
 
-      mvwaddch(win, y + 1, x + 1, curr);
+      mvwaddch(*this, y + 1, x + 1, curr);
     }
   }
 
@@ -54,7 +54,7 @@ void kuratko::MapWindow::print() {
   // status.print();
   status.refresh();
 
-  win.refresh();
+  refresh();
 }
 
 using coord = std::pair<size_t, size_t>;
