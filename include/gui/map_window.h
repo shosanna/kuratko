@@ -11,7 +11,7 @@
 #include "gui/status_window.h"
 
 namespace kuratko {
-class Map {
+class MapWindow {
  public:
   using Point = char;
 
@@ -24,7 +24,7 @@ class Map {
   std::vector<Point> data;
   std::mutex mtx;
 
-  Map(kuratko::gui::Window& win, kuratko::core::Log& log, gui::StatusWindow& status, size_t m,
+  MapWindow(kuratko::gui::Window& win, kuratko::core::Log& log, gui::StatusWindow& status, size_t m,
         size_t n)
       : log(log), win(win), status(status), m(m), n(n), data(m * n) {
   }

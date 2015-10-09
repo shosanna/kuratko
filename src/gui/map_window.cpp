@@ -7,11 +7,11 @@
 #include <fstream>
 #include <thread>
 
-#include "map.h"
+#include "gui/map_window.h"
 
 using namespace std;
 
-void kuratko::Map::reset() {
+void kuratko::MapWindow::reset() {
   for (size_t y = 0; y < m; y++) {
     for (size_t x = 0; x < n; x++) {
       // auto x = data.size();
@@ -20,7 +20,7 @@ void kuratko::Map::reset() {
   }
 }
 
-void kuratko::Map::print() {
+void kuratko::MapWindow::print() {
   for (size_t y = 0; y < m; y++) {
     for (size_t x = 0; x < n; x++) {
       chtype curr = (*this)(x, y);
@@ -65,7 +65,7 @@ struct Pair_hash {
   }
 };
 
-void kuratko::Map::pathfind(Player& p) {
+void kuratko::MapWindow::pathfind(Player& p) {
   if (p.has_target) {
     p.move_to_target(*this);
     return;
@@ -118,11 +118,11 @@ found_kolac:
   }
 }
 
-bool kuratko::Map::is_valid(size_t x, size_t y) {
+bool kuratko::MapWindow::is_valid(size_t x, size_t y) {
   return x < n && y < m;
 }
 
-void kuratko::Map::random_item(char item) {
+void kuratko::MapWindow::random_item(char item) {
   // TODO - race condition? see thread sanitizer
   std::random_device rd;
   std::uniform_int_distribution<size_t> x_dis(0, n - 1);

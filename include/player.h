@@ -16,7 +16,7 @@ constexpr char KLACIK = 'x';
 enum class Direction { UP, DOWN, LEFT, RIGHT };
 
 namespace kuratko {
-class Map;
+class MapWindow;
 
 class Player {
  public:
@@ -42,17 +42,17 @@ class Player {
     }
   }
 
-  void move(Map& map, int dx, int dy);
-  void move(Map& map, Direction dir);
+  void move(MapWindow& map, int dx, int dy);
+  void move(MapWindow& map, Direction dir);
   void napapat();
   void hrat_s_klacikem();
   int zjisti_hlad();
   int zjisti_stesti();
 
   void uprav_statusy();
-  void move_to_target(Map& map);
-  void kolac_check(Map& map);
-  void klacik_check(Map& map);
+  void move_to_target(MapWindow& map);
+  void kolac_check(MapWindow& map);
+  void klacik_check(MapWindow& map);
 
  private:
   int hlad = 0;

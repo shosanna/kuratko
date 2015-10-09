@@ -1,9 +1,9 @@
 #include "player.h"
-#include "map.h"
+#include "gui/map_window.h"
 
 using namespace kuratko;
 
-void kuratko::Player::move(Map& map, int dx, int dy) {
+void kuratko::Player::move(MapWindow& map, int dx, int dy) {
   std::lock_guard<std::mutex> guard{mtx};
   uprav_statusy(); 
 
@@ -18,7 +18,7 @@ void kuratko::Player::move(Map& map, int dx, int dy) {
   map(x, y) = typ;
 }
 
-void kuratko::Player::move(Map& map, Direction dir) {
+void kuratko::Player::move(MapWindow& map, Direction dir) {
   std::lock_guard<std::mutex> guard{mtx};
 
   uprav_statusy(); 
@@ -96,7 +96,7 @@ int kuratko::Player::zjisti_stesti() {
   return stesti;;
 }
 
-void kuratko::Player::move_to_target(Map& map) {
+void kuratko::Player::move_to_target(MapWindow& map) {
   if (map(target.first, target.second) != KOLAC) {
     map.log << "Prasatko: \"Nekdo mi spapal kolac, musim najit novy\" :(";
     has_target = false;
@@ -123,7 +123,7 @@ void kuratko::Player::hrat_s_klacikem() {
   uprav_statusy();
 }
 
-void kuratko::Player::klacik_check(Map& map) {
+void kuratko::Player::klacik_check(MapWindow& map) {
   if(map(x,y) == KLACIK) {
     hrat_s_klacikem();
 
@@ -135,7 +135,7 @@ void kuratko::Player::klacik_check(Map& map) {
   }
 }
 
-void kuratko::Player::kolac_check(Map& map) {
+void kuratko::Player::kolac_check(MapWindow& map) {
   if (map(x, y) == KOLAC) {
     napapat();
     has_target = false;
