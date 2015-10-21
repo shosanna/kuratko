@@ -100,49 +100,48 @@ void game() {
 
   game_init_colors();
 
-  MapWindow map{ footer_pos, sidebar_pos, 0, 0, footer.log, sidebar, M, N };
-  map.reset();
+  MapWindow map_window{ footer_pos, sidebar_pos, 0, 0, footer.log, sidebar, M, N };
 
   int kolacu = 5;
   int klaciku = 3;
 
   while (kolacu--) {
-    map.random_item(KOLAC);
+    map_window.random_item(KOLAC);
   }
 
   while (klaciku--) {
-    map.random_item(KLACIK);
+    map_window.random_item(KLACIK);
   }
 
   core::InputManager manager;
 
   Player kuratko{KURATKO, sidebar, 5, 3, M, N};
-  map(kuratko.x, kuratko.y) = KURATKO;
+  map_window(kuratko.x, kuratko.y) = KURATKO;
 
   Player prasatko{PRASATKO, sidebar, 1, 3, M, N};
-  map(prasatko.x, prasatko.y) = PRASATKO;
+  map_window(prasatko.x, prasatko.y) = PRASATKO;
 
-  auto f = [&kuratko, &map](int c) {
+  auto f = [&kuratko, &map_window](int c) {
     switch (c) {
       case 'a':
       case KEY_LEFT:
       case 'h':
-        kuratko.move(map, Direction::LEFT);
+        kuratko.move(map_window, Direction::LEFT);
         break;
       case 'w':
       case KEY_UP:
       case 'k':
-        kuratko.move(map, Direction::UP);
+        kuratko.move(map_window, Direction::UP);
         break;
       case 's':
       case KEY_DOWN:
       case 'j':
-        kuratko.move(map, Direction::DOWN);
+        kuratko.move(map_window, Direction::DOWN);
         break;
       case 'd':
       case KEY_RIGHT:
       case 'l':
-        kuratko.move(map, Direction::RIGHT);
+        kuratko.move(map_window, Direction::RIGHT);
         break;
       case 'q':
         exit(0);
@@ -151,10 +150,10 @@ void game() {
 
   manager.add(f);
 
-  thread t(tapkat, ref(prasatko), ref(map));
-  thread t2(kolace, ref(map));
+  thread t(tapkat, ref(prasatko), ref(map_window));
+  thread t2(kolace, ref(map_window));
 
-  game_loop(manager, map);
+  game_loop(manager, map_window);
 
   t.join();
   t2.join();

@@ -31,13 +31,13 @@ class MapWindow : public gui::Window {
             gui::StatusWindow& status, size_t m, size_t n)
       : Window(h, w, y, x), log(log), status(status), m(m), n(n), map(m, n) {
 
+    map.reset();
     mvwprintw(*this, 0, 1, "Zviratkovy les");
     box();
     ready_cursor();
     refresh();
   }
 
-  void reset();
   void print();
 
   Point& operator()(size_t x, size_t y) {

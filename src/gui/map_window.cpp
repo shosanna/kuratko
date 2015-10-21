@@ -11,15 +11,6 @@
 
 using namespace std;
 
-void kuratko::MapWindow::reset() {
-  for (size_t y = 0; y < m; y++) {
-    for (size_t x = 0; x < n; x++) {
-      // auto x = data.size();
-      (*this)(x, y) = EMPTY;
-    }
-  }
-}
-
 void kuratko::MapWindow::print() {
   for (size_t y = 0; y < m; y++) {
     for (size_t x = 0; x < n; x++) {
