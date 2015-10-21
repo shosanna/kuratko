@@ -1,13 +1,17 @@
-#ifndef MAP_H
-#define MAP_H
+#ifndef MAP_WINDOW_H
+#define MAP_WINDOW_H
 
 #include <mutex>
 #include <cassert>
 #include <vector>
 #include <string>
 #include <stdlib.h>
+
 #include "player.h"
+
+#include "core/map.h"
 #include "core/log.h"
+
 #include "gui/status_window.h"
 #include "gui/window.h"
 
@@ -21,25 +25,23 @@ class MapWindow : public gui::Window {
 
   size_t m;
   size_t n;
-  std::vector<Point> data;
-  std::mutex mtx;
 
-  MapWindow(int h, int w, int y, int x, kuratko::core::Log& log, gui::StatusWindow& status, size_t m,
-        size_t n)
-      : Window(h,w,y,x), log(log), status(status), m(m), n(n), data(m * n) {
+  core::Map map;
+  MapWindow(int h, int w, int y, int x, kuratko::core::Log& log,
+            gui::StatusWindow& status, size_t m, size_t n)
+      : Window(h, w, y, x), log(log), status(status), m(m), n(n), map(m, n) {
 
-        mvwprintw(*this, 0, 1, "Zviratkovy les");
-        box();
-        ready_cursor();
-        refresh();
+    mvwprintw(*this, 0, 1, "Zviratkovy les");
+    box();
+    ready_cursor();
+    refresh();
   }
 
   void reset();
   void print();
 
   Point& operator()(size_t x, size_t y) {
-    std::lock_guard<std::mutex> lock(mtx);
-    return data.at(n * y + x);
+    return map(x, y);
   }
 
   void pathfind(Player&);
@@ -50,5 +52,4 @@ class MapWindow : public gui::Window {
 };
 }
 
-
-#endif /* MAP_H */
+#endif /* MAP_WINDOW_H */

@@ -23,7 +23,7 @@ void kuratko::MapWindow::reset() {
 void kuratko::MapWindow::print() {
   for (size_t y = 0; y < m; y++) {
     for (size_t x = 0; x < n; x++) {
-      chtype curr = (*this)(x, y);
+      chtype curr = map(x, y);
 
       switch (curr) {
         case KURATKO:
@@ -128,5 +128,5 @@ void kuratko::MapWindow::random_item(char item) {
   std::uniform_int_distribution<size_t> x_dis(0, n - 1);
   std::uniform_int_distribution<size_t> y_dis(0, m - 1);
   std::mt19937 gen(rd());
-  (*this)(x_dis(gen), y_dis(gen)) = item;
+  map(x_dis(gen), y_dis(gen)) = item;
 }

@@ -3,10 +3,11 @@
 #include <ncurses.h>
 #include <vector>
 #include <random>
-#include "game.h"
-#include "core/log.h"
-#include "core/input_manager.h"
+#include <cstdlib>
 
+#include "game.h"
+
+#include "core/log.h"
 #include "core/input_manager.h"
 
 #include "gui/map_window.h"
@@ -19,15 +20,6 @@ using namespace kuratko;
 
 static void tapkat(Player& prasatko, MapWindow& map);
 static void kolace(MapWindow& map);
-
-struct Enable_curses {
-  Enable_curses() {
-    initscr();
-  }
-  ~Enable_curses() {
-    endwin();
-  }
-};
 
 static void update(core::InputManager& manager) {
   int c = getch();
@@ -59,8 +51,14 @@ void game_init_colors() {
   init_pair(4, COLOR_CYAN, COLOR_BLACK);
 }
 
+static void cleanup_ncurses() {
+  endwin();
+}
+
 void game() {
-  Enable_curses c__{};
+  initscr();
+
+  std::atexit(cleanup_ncurses);
 
   start_color();
   init_pair(1, COLOR_RED, COLOR_BLUE);
