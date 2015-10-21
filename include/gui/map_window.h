@@ -23,15 +23,11 @@ class MapWindow : public gui::Window {
   core::Log& log;
   gui::StatusWindow& status;
 
-  size_t m;
-  size_t n;
+  core::Map& map;
 
-  core::Map map;
-  MapWindow(int h, int w, int y, int x, kuratko::core::Log& log,
-            gui::StatusWindow& status, size_t m, size_t n)
-      : Window(h, w, y, x), log(log), status(status), m(m), n(n), map(m, n) {
-
-    map.reset();
+  MapWindow(int h, int w, int y, int x, core::Log& log,
+            gui::StatusWindow& status, core::Map& map)
+      : Window(h, w, y, x), log(log), status(status), map(map) {
     mvwprintw(*this, 0, 1, "Zviratkovy les");
     box();
     ready_cursor();
@@ -39,14 +35,6 @@ class MapWindow : public gui::Window {
   }
 
   void print();
-
-  Point& operator()(size_t x, size_t y) {
-    return map(x, y);
-  }
-
-  void pathfind(Player&);
-  bool is_valid(size_t x, size_t y);
-  void random_item(char item);
 
  private:
 };

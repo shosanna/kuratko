@@ -18,8 +18,8 @@
 using namespace std;
 using namespace kuratko;
 
-static void tapkat(Player& prasatko, MapWindow& map);
-static void kolace(MapWindow& map);
+static void tapkat(Player& prasatko, core::Map& map);
+static void kolace(core::Map& map);
 
 static void update(core::InputManager& manager) {
   int c = getch();
@@ -100,48 +100,49 @@ void game() {
 
   game_init_colors();
 
-  MapWindow map_window{ footer_pos, sidebar_pos, 0, 0, footer.log, sidebar, M, N };
+  core::Map map{footer.log, M, N};
+  MapWindow map_window{ footer_pos, sidebar_pos, 0, 0, footer.log, sidebar, map };
 
   int kolacu = 5;
   int klaciku = 3;
 
   while (kolacu--) {
-    map_window.random_item(KOLAC);
+    map.random_item(KOLAC);
   }
 
   while (klaciku--) {
-    map_window.random_item(KLACIK);
+    map.random_item(KLACIK);
   }
 
   core::InputManager manager;
 
   Player kuratko{KURATKO, sidebar, 5, 3, M, N};
-  map_window(kuratko.x, kuratko.y) = KURATKO;
+  map(kuratko.x, kuratko.y) = KURATKO;
 
   Player prasatko{PRASATKO, sidebar, 1, 3, M, N};
-  map_window(prasatko.x, prasatko.y) = PRASATKO;
+  map(prasatko.x, prasatko.y) = PRASATKO;
 
-  auto f = [&kuratko, &map_window](int c) {
+  auto f = [&kuratko, &map](int c) {
     switch (c) {
       case 'a':
       case KEY_LEFT:
       case 'h':
-        kuratko.move(map_window, Direction::LEFT);
+        kuratko.move(map, Direction::LEFT);
         break;
       case 'w':
       case KEY_UP:
       case 'k':
-        kuratko.move(map_window, Direction::UP);
+        kuratko.move(map, Direction::UP);
         break;
       case 's':
       case KEY_DOWN:
       case 'j':
-        kuratko.move(map_window, Direction::DOWN);
+        kuratko.move(map, Direction::DOWN);
         break;
       case 'd':
       case KEY_RIGHT:
       case 'l':
-        kuratko.move(map_window, Direction::RIGHT);
+        kuratko.move(map, Direction::RIGHT);
         break;
       case 'q':
         exit(0);
@@ -150,8 +151,8 @@ void game() {
 
   manager.add(f);
 
-  thread t(tapkat, ref(prasatko), ref(map_window));
-  thread t2(kolace, ref(map_window));
+  thread t(tapkat, ref(prasatko), ref(map));
+  thread t2(kolace, ref(map));
 
   game_loop(manager, map_window);
 
@@ -159,14 +160,14 @@ void game() {
   t2.join();
 }
 
-static void tapkat(Player& prasatko, MapWindow& map) {
+static void tapkat(Player& prasatko, core::Map& map) {
   while (1) {
     this_thread::sleep_for(chrono::milliseconds(800));
     map.pathfind(prasatko);
   }
 }
 
-static void kolace(MapWindow& map) {
+static void kolace(core::Map& map) {
   while (1) {
     this_thread::sleep_for(chrono::seconds(5));
     map.random_item(KOLAC);
