@@ -10,9 +10,9 @@ void kuratko::gui::StatusWindow::refresh() {
   wattroff(w, A_UNDERLINE);
 
   for (auto hladik : hladiky) {
-    int x,y;
+    int x, y;
     getyx(w, y, x);
-    wmove(w, y, x+1);
+    wmove(w, y, x + 1);
 
     if (hladik.second > 3) {
       start_color();
@@ -24,17 +24,17 @@ void kuratko::gui::StatusWindow::refresh() {
     }
   }
 
-  int x,y;
+  int x, y;
   getyx(w, y, x);
-  wmove(w, y, x+1);
+  wmove(w, y, x + 1);
   wattron(w, A_UNDERLINE);
   waddstr(w, "Stestiky:\n");
   wattroff(w, A_UNDERLINE);
 
   for (auto stesti : stestiky) {
-    int x,y;
+    int x, y;
     getyx(w, y, x);
-    wmove(w, y, x+1);
+    wmove(w, y, x + 1);
 
     wprintw(w, "%s: %d\n", stesti.first.c_str(), stesti.second);
   }
