@@ -22,9 +22,9 @@ void kuratko::MapWindow::print() {
     offset_y = std::max<int>(0, kuratko->y - window_m / 2);
   }
 
-  for (size_t y = offset_y; y < window_m; y++) {
-    for (size_t x = offset_x; x < window_n; x++) {
-      chtype curr = map(x, y);
+  for (size_t y = 0; y < window_m; y++) {
+    for (size_t x = 0; x < window_n; x++) {
+      chtype curr = map(x + offset_x, y + offset_y);
 
       switch (curr) {
         case KURATKO:

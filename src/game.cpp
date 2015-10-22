@@ -104,7 +104,7 @@ void game() {
   game_init_colors();
 
   core::Map map{footer.log, M, N};
-  MapWindow map_window{ 15, 15, footer_pos, sidebar_pos, 0, 0, footer.log, sidebar, map };
+  MapWindow map_window{ footer_pos - 10, sidebar_pos - 10, footer_pos, sidebar_pos, 0, 0, footer.log, sidebar, map };
 
   int kolacu = 15;
   int klaciku = 15;
