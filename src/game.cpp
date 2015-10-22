@@ -7,6 +7,7 @@
 #include <iostream>
 
 #include "game.h"
+#include "player.h"
 
 #include "core/log.h"
 #include "core/input_manager.h"
@@ -126,16 +127,10 @@ void game() {
   auto f = [&kuratko, &map, &map_window](core::InputAction c) {
     switch (c) {
       case core::InputAction::Left:
-        kuratko.move(map, Direction::LEFT);
-        break;
       case core::InputAction::Up:
-        kuratko.move(map, Direction::UP);
-        break;
       case core::InputAction::Down:
-        kuratko.move(map, Direction::DOWN);
-        break;
       case core::InputAction::Right:
-        kuratko.move(map, Direction::RIGHT);
+        kuratko.move(map, from_action(c));
         break;
       case core::InputAction::Quit:
         // TODO - handle exit gracefully, instead of calling exit
