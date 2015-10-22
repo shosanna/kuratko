@@ -4,6 +4,7 @@
 #include <vector>
 #include <random>
 #include <cstdlib>
+#include <iostream>
 
 #include "game.h"
 
@@ -101,10 +102,10 @@ void game() {
   game_init_colors();
 
   core::Map map{footer.log, M, N};
-  MapWindow map_window{ footer_pos, sidebar_pos, 0, 0, footer.log, sidebar, map };
+  MapWindow map_window{ 10, 10, footer_pos, sidebar_pos, 0, 0, footer.log, sidebar, map };
 
-  int kolacu = 5;
-  int klaciku = 3;
+  int kolacu = 15;
+  int klaciku = 15;
 
   while (kolacu--) {
     map.random_item(KOLAC);
@@ -122,30 +123,29 @@ void game() {
   Player prasatko{PRASATKO, sidebar, 1, 3, M, N};
   map(prasatko.x, prasatko.y) = PRASATKO;
 
-  auto f = [&kuratko, &map](int c) {
+  auto f = [&kuratko, &map, &map_window](core::InputAction c) {
     switch (c) {
-      case 'a':
-      case KEY_LEFT:
-      case 'h':
+      case core::InputAction::Left:
         kuratko.move(map, Direction::LEFT);
         break;
-      case 'w':
-      case KEY_UP:
-      case 'k':
+      case core::InputAction::Up:
         kuratko.move(map, Direction::UP);
         break;
-      case 's':
-      case KEY_DOWN:
-      case 'j':
+      case core::InputAction::Down:
         kuratko.move(map, Direction::DOWN);
         break;
-      case 'd':
-      case KEY_RIGHT:
-      case 'l':
+      case core::InputAction::Right:
         kuratko.move(map, Direction::RIGHT);
         break;
-      case 'q':
+      case core::InputAction::Quit:
+        // TODO - handle exit gracefully, instead of calling exit
         exit(0);
+        break;
+
+      default:
+        // TODO - better logging
+        cerr << "Unrecognized input character '";
+        // cerr << "Unrecognized input character '" << c << "'" << endl;
     }
   };
 

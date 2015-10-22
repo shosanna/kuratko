@@ -12,8 +12,8 @@
 using namespace std;
 
 void kuratko::MapWindow::print() {
-  for (size_t y = 0; y < map.m; y++) {
-    for (size_t x = 0; x < map.n; x++) {
+  for (size_t y = offset_y; y < window_m; y++) {
+    for (size_t x = offset_x; x < window_n; x++) {
       chtype curr = map(x, y);
 
       switch (curr) {

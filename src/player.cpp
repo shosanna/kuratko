@@ -3,9 +3,33 @@
 
 using namespace kuratko;
 
+struct invalid_direction{};
+
+std::pair<int, int> dir_diff(Direction dir) {
+  switch (dir) {
+    case Direction::LEFT: return {-1, 0};
+    case Direction::RIGHT: return {1, 0};
+    case Direction::UP: return {0,-1};
+    case Direction::DOWN: return {0,1};
+    default:
+      throw invalid_direction{};
+  }
+}
+
+Direction from_action(core::InputAction action) {
+  switch (action) {
+    case core::InputAction::Left: return Direction::LEFT;
+    case core::InputAction::Right: return Direction::RIGHT;
+    case core::InputAction::Up: return Direction::UP;
+    case core::InputAction::Down: return Direction::LEFT;
+    default:
+      throw core::invalid_input_action{};
+  }
+}
+
 void kuratko::Player::move(core::Map& map, int dx, int dy) {
   std::lock_guard<std::mutex> guard{mtx};
-  uprav_statusy(); 
+  uprav_statusy();
 
   map(x, y) = EMPTY;
 
@@ -21,7 +45,7 @@ void kuratko::Player::move(core::Map& map, int dx, int dy) {
 void kuratko::Player::move(core::Map& map, Direction dir) {
   std::lock_guard<std::mutex> guard{mtx};
 
-  uprav_statusy(); 
+  uprav_statusy();
   map(x, y) = EMPTY;
 
   switch (dir) {
@@ -128,10 +152,10 @@ void kuratko::Player::klacik_check(core::Map& map) {
     hrat_s_klacikem();
 
    if (typ == KURATKO) {
-      map.log << "Kuratko si hraje s klacikem!"; 
+      map.log << "Kuratko si hraje s klacikem!";
    } else if (typ == PRASATKO) {
-      map.log << "Prasatko stavi klacikovy domecek."; 
-   } 
+      map.log << "Prasatko stavi klacikovy domecek.";
+   }
   }
 }
 

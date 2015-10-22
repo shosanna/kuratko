@@ -1,10 +1,10 @@
 ASAN=-fsanitize=address -fno-omit-frame-pointer
 ASAN=
 INCLUDE=-Iinclude
-CXXFLAGS=$(INCLUDE) -g3 -Wall -Wextra -std=c++14 -O0 -pthread $(ASAN)
-LIB=-lncurses -lpthread $(ASAN)
+CXXFLAGS=$(INCLUDE) -g3 -Wall -Wextra -std=c++11 -O0 -pthread $(ASAN)
+LIB=-lncurses -lpthread -lstdc++ $(ASAN)
 
-CXX=clang++
+CXX=gcc-5
 EXECDIR=./bin
 OBJDIR=./obj
 PROGRAM=kuratko

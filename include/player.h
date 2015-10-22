@@ -6,6 +6,7 @@
 #include <ncurses.h>
 
 #include "gui/status_window.h"
+#include "core/input_manager.h"
 
 constexpr char EMPTY = '.';
 constexpr char KURATKO = '^';
@@ -14,6 +15,8 @@ constexpr char PRASATKO = '@';
 constexpr char KLACIK = 'x';
 
 enum class Direction { UP, DOWN, LEFT, RIGHT };
+std::pair<int, int> dir_diff(Direction dir);
+Direction from_action(kuratko::core::InputAction action);
 
 namespace kuratko {
 namespace core {
