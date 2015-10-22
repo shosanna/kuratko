@@ -1,16 +1,23 @@
+#include <algorithm>
+#include <sstream>
 #include "player.h"
 #include "core/map.h"
 
+using namespace std;
 using namespace kuratko;
 
-struct invalid_direction{};
+struct invalid_direction {};
 
 std::pair<int, int> dir_diff(Direction dir) {
   switch (dir) {
-    case Direction::LEFT: return {-1, 0};
-    case Direction::RIGHT: return {1, 0};
-    case Direction::UP: return {0,-1};
-    case Direction::DOWN: return {0,1};
+    case Direction::LEFT:
+      return {-1, 0};
+    case Direction::RIGHT:
+      return {1, 0};
+    case Direction::UP:
+      return {0, -1};
+    case Direction::DOWN:
+      return {0, 1};
     default:
       throw invalid_direction{};
   }
@@ -18,10 +25,14 @@ std::pair<int, int> dir_diff(Direction dir) {
 
 Direction from_action(core::InputAction action) {
   switch (action) {
-    case core::InputAction::Left: return Direction::LEFT;
-    case core::InputAction::Right: return Direction::RIGHT;
-    case core::InputAction::Up: return Direction::UP;
-    case core::InputAction::Down: return Direction::LEFT;
+    case core::InputAction::Left:
+      return Direction::LEFT;
+    case core::InputAction::Right:
+      return Direction::RIGHT;
+    case core::InputAction::Up:
+      return Direction::UP;
+    case core::InputAction::Down:
+      return Direction::DOWN;
     default:
       throw core::invalid_input_action{};
   }
@@ -48,47 +59,29 @@ void kuratko::Player::move(core::Map& map, Direction dir) {
   uprav_statusy();
   map(x, y) = EMPTY;
 
-  switch (dir) {
-    case Direction::UP:
-      if (y > 0) {
-        --y;
-      } else {
-        hlad -= 1;
+  auto diff = dir_diff(dir);
+
+  if (map.is_valid(x + diff.first, y + diff.second)) {
+    x = x + diff.first;
+    y = y + diff.second;
+  } else {
+    switch (dir) {
+      case Direction::UP:
         map.log << "Kuratko utika smerem k rybnicku!";
-        map.log << "Z toho mu vyhladlo :(";
-      }
-
-      break;
-    case Direction::DOWN:
-      if (y < M - 1) {
-        ++y;
-      } else {
-        hlad -= 1;
+        break;
+      case Direction::DOWN:
         map.log << "Kuratko se toula k jezevcum";
-        map.log << "Z toho mu vyhladlo :(";
-      }
-
-      break;
-    case Direction::LEFT:
-      if (x > 0) {
-        --x;
-      } else {
-        hlad -= 1;
+        break;
+      case Direction::LEFT:
         map.log << "Kuratko miri do skalnateho lesa";
-        map.log << "Z toho mu vyhladlo :(";
-      }
-
-      break;
-    case Direction::RIGHT:
-      if (x < N - 1) {
-        ++x;
-      } else {
-        hlad -= 1;
+        break;
+      case Direction::RIGHT:
         map.log << "Kuratko jde smerem k lvickovi Eliasovi";
-        map.log << "Z toho mu vyhladlo :(";
-      }
+        break;
+    }
 
-      break;
+    map.log << "Z toho mu vyhladlo :(";
+    --hlad;
   }
 
   kolac_check(map);
@@ -117,7 +110,7 @@ int kuratko::Player::zjisti_hlad() {
 }
 
 int kuratko::Player::zjisti_stesti() {
-  return stesti;;
+  return stesti;
 }
 
 void kuratko::Player::move_to_target(core::Map& map) {
@@ -148,14 +141,14 @@ void kuratko::Player::hrat_s_klacikem() {
 }
 
 void kuratko::Player::klacik_check(core::Map& map) {
-  if(map(x,y) == KLACIK) {
+  if (map(x, y) == KLACIK) {
     hrat_s_klacikem();
 
-   if (typ == KURATKO) {
+    if (typ == KURATKO) {
       map.log << "Kuratko si hraje s klacikem!";
-   } else if (typ == PRASATKO) {
+    } else if (typ == PRASATKO) {
       map.log << "Prasatko stavi klacikovy domecek.";
-   }
+    }
   }
 }
 

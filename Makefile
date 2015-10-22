@@ -1,5 +1,5 @@
-ASAN=-fsanitize=address -fno-omit-frame-pointer
 ASAN=
+ASAN=-fsanitize=address -fno-omit-frame-pointer
 INCLUDE=-Iinclude
 CXXFLAGS=$(INCLUDE) -g3 -Wall -Wextra -std=c++11 -O0 -pthread $(ASAN)
 LIB=-lncurses -lpthread -lstdc++ $(ASAN)

@@ -5,8 +5,9 @@
 #include <utility>
 #include <ncurses.h>
 
-#include "gui/status_window.h"
 #include "core/input_manager.h"
+#include "gui/map_window.h"
+#include "gui/status_window.h"
 
 constexpr char EMPTY = '.';
 constexpr char KURATKO = '^';

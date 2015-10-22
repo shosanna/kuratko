@@ -11,6 +11,7 @@
 
 #include "core/log.h"
 #include "core/input_manager.h"
+#include "core/map.h"
 
 #include "gui/map_window.h"
 #include "gui/log_window.h"
@@ -103,7 +104,7 @@ void game() {
   game_init_colors();
 
   core::Map map{footer.log, M, N};
-  MapWindow map_window{ 10, 10, footer_pos, sidebar_pos, 0, 0, footer.log, sidebar, map };
+  MapWindow map_window{ 15, 15, footer_pos, sidebar_pos, 0, 0, footer.log, sidebar, map };
 
   int kolacu = 15;
   int klaciku = 15;
@@ -121,10 +122,12 @@ void game() {
   Player kuratko{KURATKO, sidebar, 5, 3, M, N};
   map(kuratko.x, kuratko.y) = KURATKO;
 
+  map_window.kuratko = &kuratko;
+
   Player prasatko{PRASATKO, sidebar, 1, 3, M, N};
   map(prasatko.x, prasatko.y) = PRASATKO;
 
-  auto f = [&kuratko, &map, &map_window](core::InputAction c) {
+  auto f = [&kuratko, &map](core::InputAction c) {
     switch (c) {
       case core::InputAction::Left:
       case core::InputAction::Up:

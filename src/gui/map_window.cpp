@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <string>
 #include <regex>
 #include <queue>
@@ -8,10 +9,19 @@
 #include <thread>
 
 #include "gui/map_window.h"
+#include "core/map.h"
 
 using namespace std;
 
 void kuratko::MapWindow::print() {
+  int offset_x = 0;
+  int offset_y = 0;
+
+  if (kuratko) {
+    offset_x = std::max<int>(0, kuratko->x - window_n / 2);
+    offset_y = std::max<int>(0, kuratko->y - window_m / 2);
+  }
+
   for (size_t y = offset_y; y < window_m; y++) {
     for (size_t x = offset_x; x < window_n; x++) {
       chtype curr = map(x, y);
@@ -47,4 +57,3 @@ void kuratko::MapWindow::print() {
 
   refresh();
 }
-

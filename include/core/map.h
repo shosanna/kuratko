@@ -1,10 +1,12 @@
 #include <vector>
 #include <mutex>
-#include "core/log.h"
-#include "player.h"
 
 namespace kuratko {
+class Player;
+
 namespace core {
+
+class Log;
 class Map {
  public:
   using Point = char;

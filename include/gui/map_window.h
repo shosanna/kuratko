@@ -9,13 +9,18 @@
 
 #include "player.h"
 
-#include "core/map.h"
 #include "core/log.h"
 
 #include "gui/status_window.h"
 #include "gui/window.h"
 
 namespace kuratko {
+class Player;
+
+namespace core {
+class Map;
+}
+
 class MapWindow : public gui::Window {
  public:
   using Point = char;
@@ -30,6 +35,7 @@ class MapWindow : public gui::Window {
   gui::StatusWindow& status;
 
   core::Map& map;
+  Player* kuratko = nullptr;
 
   MapWindow(size_t window_m, size_t window_n, int h, int w, int y, int x,
             core::Log& log, gui::StatusWindow& status, core::Map& map)
@@ -41,7 +47,6 @@ class MapWindow : public gui::Window {
         log(log),
         status(status),
         map(map) {
-
     mvwprintw(*this, 0, 1, "Zviratkovy les");
     box();
     ready_cursor();
